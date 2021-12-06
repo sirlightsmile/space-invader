@@ -2,11 +2,34 @@
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    [RequireComponent(typeof (SpriteRenderer))]
-    [RequireComponent(typeof (Rigidbody2D))]
-    [RequireComponent(typeof (Collider2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
     public abstract class SpaceObject : MonoBehaviour
     {
+        /// <summary>
+        /// Get sprite width
+        /// </summary>
+        /// <value>sprite width</value>
+        protected float Width
+        {
+            get
+            {
+                return _spriteRenderer?.bounds.size.x * _spriteRenderer?.sprite.pixelsPerUnit ?? 0;
+            }
+        }
+
+        /// <summary>
+        /// Get sprite height
+        /// </summary>
+        /// <value>sprite height</value>
+        protected float Height
+        {
+            get
+            {
+                return _spriteRenderer?.bounds.size.y * _spriteRenderer?.sprite.pixelsPerUnit ?? 0;
+            }
+        }
+
         [SerializeField]
         private SpriteRenderer _spriteRenderer;
 
@@ -18,7 +41,8 @@ namespace SmileProject.SpaceInvader.Gameplay
         {
             if (_spriteRenderer == null)
             {
-                _spriteRenderer = GetComponent<SpriteRenderer>();
+                Debug.Assert(_spriteRenderer != null, "Missing sprite renderer reference in space object. Should assign reference in prefab.");
+                _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             }
         }
 
@@ -59,16 +83,14 @@ namespace SmileProject.SpaceInvader.Gameplay
             //TODO: animate interval
             if (_animateSprites.Length > 1)
             {
-                Debug
-                    .LogAssertion("Unable to animate sprite. Should have more than one sprites");
+                Debug.LogAssertion("Unable to animate sprite. Should have more than one sprites");
                 return;
             }
-            _currentSpriteFrame =
-                _currentSpriteFrame++ % _animateSprites.Length;
+            _currentSpriteFrame = _currentSpriteFrame++ % _animateSprites.Length;
             Sprite currentFrameSprite = _animateSprites[_currentSpriteFrame];
-            SetSprite (currentFrameSprite);
+            SetSprite(currentFrameSprite);
         }
 
-        public abstract void OnTriggerEnter(Collider other);
+        protected abstract void OnTriggerEnter2D(Collider2D other);
     }
 }

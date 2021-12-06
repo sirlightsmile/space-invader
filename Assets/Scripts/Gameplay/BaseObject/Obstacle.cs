@@ -12,10 +12,32 @@ namespace SmileProject.SpaceInvader.Gameplay
             return this;
         }
 
-        public override void OnTriggerEnter(Collider other)
+        private void GetHit()
         {
-            // TODO: on get hit with enemy/bullet
-            throw new System.NotImplementedException();
+            Durability--;
+            if (Durability == 0)
+            {
+                OnDestroy();
+            }
+        }
+
+        private void OnDestroy()
+        {
+
+        }
+
+        protected override void OnTriggerEnter2D(Collider2D other)
+        {
+            Bullet bullet = other.transform.GetComponent<Bullet>();
+            string otherTag = other.tag;
+            if (otherTag == ObjectTags.Bullet)
+            {
+                GetHit();
+            }
+            else if (otherTag == ObjectTags.Invader)
+            {
+                OnDestroy();
+            }
         }
     }
 }
