@@ -23,18 +23,18 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         private void OnDestroy()
         {
-
+            Destroy(this.gameObject);
         }
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             Bullet bullet = other.transform.GetComponent<Bullet>();
             string otherTag = other.tag;
-            if (otherTag == ObjectTags.Bullet)
+            if (otherTag == Tags.Bullet)
             {
                 GetHit();
             }
-            else if (otherTag == ObjectTags.Invader)
+            else if (otherTag == Tags.Invader)
             {
                 OnDestroy();
             }
