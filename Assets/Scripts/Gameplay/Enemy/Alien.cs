@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay
+namespace SmileProject.SpaceInvader.Gameplay.Enemy
 {
     public class Alien : SpaceWarrior
     {

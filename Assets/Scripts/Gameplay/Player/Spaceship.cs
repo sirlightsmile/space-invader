@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay
+namespace SmileProject.SpaceInvader.Gameplay.Player
 {
     public enum MoveDirection
     {
