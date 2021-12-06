@@ -3,21 +3,24 @@ using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public abstract class Creature : SpaceObject
+    /// <summary>
+    /// Base object of warrior in space
+    /// </summary>
+    public abstract class SpaceWarrior : SpaceObject
     {
         /// <summary>
         /// Invoke when got hit <Attacker, Defender>
         /// </summary>
-        public event Action<Creature, Creature> GotHit;
+        public event Action<SpaceWarrior, SpaceWarrior> GotHit;
 
         /// <summary>
-        /// Invoke when creature hp reached zero
+        /// Invoke when SpaceWarrior hp reached zero
         /// </summary>
-        public event Action<Creature> Dead;
+        public event Action<SpaceWarrior> Dead;
 
         public int HP { get; private set; }
 
-        public Creature SetHP(int hp)
+        public SpaceWarrior SetHP(int hp)
         {
             HP = hp;
             return this;
@@ -28,7 +31,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             return HP <= 0;
         }
 
-        public virtual void GetHit(int damage, Creature attacker)
+        public virtual void GetHit(int damage, SpaceWarrior attacker)
         {
             int result = HP - damage;
             HP = Mathf.Clamp(result, 0, HP);
@@ -36,7 +39,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
             if (IsDead())
             {
-                ShipDestroy();
+                Destroy();
             }
             else
             {
@@ -44,10 +47,9 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
         }
 
-        protected virtual void ShipDestroy()
+        protected virtual void Destroy()
         {
             Dead?.Invoke(this);
         }
-
     }
 }

@@ -4,6 +4,9 @@ namespace SmileProject.SpaceInvader.Gameplay
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
+    /// <summary>
+    /// Base object of every displayed object in gameplay scene
+    /// </summary>
     public abstract class SpaceObject : MonoBehaviour
     {
         /// <summary>

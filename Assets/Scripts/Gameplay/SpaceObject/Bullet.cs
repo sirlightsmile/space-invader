@@ -4,7 +4,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 {
     public class Bullet : SpaceObject
     {
-        public Creature Owner
+        public SpaceWarrior Owner
         {
             get
             {
@@ -20,7 +20,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         private float _bulletSpeed = 5f;
         private int _damage = 1;
         private float _yBorder;
-        private Creature _owner;
+        private SpaceWarrior _owner;
 
         /// <summary>
         /// Reference of owner tag. In case owner was destroyed before bullet reached target
@@ -48,7 +48,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         /// <param name="owner">owner</param>
         /// <returns>Bullet</returns>
-        public Bullet SetOwner(Creature owner)
+        public Bullet SetOwner(SpaceWarrior owner)
         {
             Owner = owner;
             _ownerTag = owner.tag;

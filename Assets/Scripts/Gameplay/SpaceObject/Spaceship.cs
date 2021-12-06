@@ -8,7 +8,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         Right = 1
     }
 
-    public class Player : Creature
+    public class Spaceship : SpaceWarrior
     {
         [SerializeField]
         private float _moveSpeed;
@@ -25,7 +25,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         /// <param name="speed">speed in float</param>
         /// <returns></returns>
-        public Player SetSpeed(float speed)
+        public Spaceship SetSpeed(float speed)
         {
             _moveSpeed = speed;
             return this;

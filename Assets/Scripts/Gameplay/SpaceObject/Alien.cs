@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public class Invader : Creature
+    public class Alien : SpaceWarrior
     {
         protected override void OnTriggerEnter2D(Collider2D other)
         {

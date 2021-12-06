@@ -16,7 +16,19 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: ef604634871125d48919834865ab9851
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 899753f64df9e794eb6ca42f6cb51332
+    m_Address: EnemySprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f7b0c8993a054b241bf6e749bbb6df64
+    m_Address: PlayerSprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ab2d51ddf0fc1cb49aa8055e93289ae5
+    m_Address: ShieldSprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7adbe51be6ddb7e4082582cdf01515d0, type: 2}
   m_SchemaSet:
