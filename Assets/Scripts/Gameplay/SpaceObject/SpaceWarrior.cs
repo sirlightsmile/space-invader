@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
@@ -19,6 +20,11 @@ namespace SmileProject.SpaceInvader.Gameplay
         public event Action<SpaceWarrior> Dead;
 
         public int HP { get; private set; }
+
+        [SerializeField]
+        protected Transform _attackPointTransform;
+
+        protected Weapon _weapon;
 
         public SpaceWarrior SetHP(int hp)
         {
@@ -45,6 +51,13 @@ namespace SmileProject.SpaceInvader.Gameplay
             {
                 // TODO: play get hit sound
             }
+        }
+
+        public virtual async Task SetWeapon(Weapon newWeapon)
+        {
+            await newWeapon.Setup();
+            _weapon = newWeapon;
+            _weapon.SetAttackPointTransform(_attackPointTransform);
         }
 
         protected virtual void Destroy()

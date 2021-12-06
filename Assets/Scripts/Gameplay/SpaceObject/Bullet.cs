@@ -1,8 +1,9 @@
+using SmileProject.Generic;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public class Bullet : SpaceObject
+    public class Bullet : PoolObject
     {
         public SpaceWarrior Owner
         {
@@ -30,6 +31,16 @@ namespace SmileProject.SpaceInvader.Gameplay
         private void Start()
         {
             SetBorder();
+        }
+
+        public override void OnSpawn()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDespawn()
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -83,7 +94,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             transform.Translate(moveVector * Time.deltaTime * _bulletSpeed);
             if (IsVisible())
             {
-                // TODO: destroy bullet
+                Destroy();
             }
         }
 
@@ -106,11 +117,16 @@ namespace SmileProject.SpaceInvader.Gameplay
             _yBorder = borderWorldPoint;
         }
 
-        protected override void OnTriggerEnter2D(Collider2D other)
+        private void Destroy()
+        {
+            Destroy(this.gameObject);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.tag != _ownerTag)
             {
-                Destroy(this.gameObject);
+                Destroy();
             }
         }
     }
