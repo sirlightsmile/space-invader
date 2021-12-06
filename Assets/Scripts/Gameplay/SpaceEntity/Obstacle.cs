@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public class Obstacle : SpaceObject
+    public class Obstacle : SpaceEntity
     {
         public int Durability { get; private set; }
 

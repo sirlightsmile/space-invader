@@ -7,7 +7,7 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// <summary>
     /// Base object of warrior in space
     /// </summary>
-    public abstract class SpaceWarrior : SpaceObject
+    public abstract class SpaceWarrior : SpaceEntity
     {
         /// <summary>
         /// Invoke when got hit <Attacker, Defender>

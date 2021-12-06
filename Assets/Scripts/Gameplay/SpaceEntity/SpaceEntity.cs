@@ -7,7 +7,7 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// <summary>
     /// Base object of every displayed object in gameplay scene
     /// </summary>
-    public abstract class SpaceObject : MonoBehaviour
+    public abstract class SpaceEntity : MonoBehaviour
     {
         /// <summary>
         /// Get sprite width
@@ -54,7 +54,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         /// <param name="sprite">sprite</param>
         /// <returns></returns>
-        public SpaceObject SetSprite(Sprite sprite)
+        public SpaceEntity SetSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
             return this;
@@ -66,7 +66,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <param name="sprites">array of animate sprite</param>
         /// <param name="startFrame">index of sprite</param>
         /// <returns></returns>
-        public SpaceObject SetSprite(Sprite[] sprites, int startFrame = 0)
+        public SpaceEntity SetSprite(Sprite[] sprites, int startFrame = 0)
         {
             if (startFrame > sprites.Length)
             {
