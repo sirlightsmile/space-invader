@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
@@ -24,7 +25,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         [SerializeField]
         protected Transform _attackPointTransform;
 
-        protected Weapon _weapon;
+        protected Weapon<WeaponModel> _weapon;
 
         public SpaceWarrior SetHP(int hp)
         {
@@ -53,7 +54,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
         }
 
-        public virtual async Task SetWeapon(Weapon newWeapon)
+        public virtual async Task SetWeapon(Weapon<WeaponModel> newWeapon)
         {
             await newWeapon.Setup();
             _weapon = newWeapon;

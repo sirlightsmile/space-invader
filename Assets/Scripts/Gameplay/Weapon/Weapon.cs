@@ -1,17 +1,37 @@
 ﻿using System.Threading.Tasks;
+using SmileProject.Generic;
+using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public abstract class Weapon
+    public abstract class Weapon<T> where T : WeaponModel
     {
-        public const int WEAPON_INITIAL_LEVEL = 1;
+        private const int WEAPON_INITIAL_LEVEL = 1;
+        protected Transform AttackPoint { get { return _attackPointTransform; } }
+        protected T Model { get { return _model; } }
+        protected int Damage { get { return _damage; } }
 
-        protected int _level;
-        protected int _maxLevel;
-        protected int _damage;
-        protected float _attackSpeed;
-        protected Transform _attackPointTransform;
+        private int _level;
+        private int _maxLevel;
+        private int _damage;
+        private float _attackSpeed;
+        private Transform _attackPointTransform;
+        private T _model;
+
+        #region Sounds
+        private AudioManager _audioManager;
+        private SoundKeys _attackSound;
+        #endregion
+
+        public Weapon(T model)
+        {
+            _model = model;
+            _level = WEAPON_INITIAL_LEVEL;
+            _maxLevel = model.MaxLevel;
+            _damage = model.BaseDamage;
+            _attackSpeed = model.BaseSpeed;
+        }
 
         /// <summary>
         /// Set attack initiate point
@@ -22,6 +42,10 @@ namespace SmileProject.SpaceInvader.Gameplay
             _attackPointTransform = transform;
         }
 
+        /// <summary>
+        /// Invoke weapon attack
+        /// </summary>
+        /// <param name="attacker"></param>
         public abstract void Attack(SpaceWarrior attacker);
 
         /// <summary>
@@ -29,28 +53,52 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         public abstract Task Setup();
 
-        protected Weapon SetDamage(int damage)
+        /// <summary>
+        /// Level up weapon then automatic update status
+        /// </summary>
+        /// <param name="addLevel">adding level</param>
+        public void LevelUp(int addLevel = 1)
         {
-            _damage = damage;
-            return this;
+            int addedLevel = _level + addLevel;
+            int targetLevel = Mathf.Clamp(addedLevel, _level, _maxLevel);
+            if (_level != targetLevel)
+            {
+                _level = targetLevel;
+                UpdateStatus();
+            }
         }
 
-        protected Weapon SetLevel(int level)
+        /// <summary>
+        /// Inject sound system to this weapon
+        /// </summary>
+        /// <param name="audioManager">Audio manager reference</param>
+        /// <param name="attackSound">Attack sound key</param>
+        public void SetSound(AudioManager audioManager, SoundKeys attackSound)
         {
-            _level = level;
-            return this;
+            _audioManager = audioManager;
+            _attackSound = attackSound;
         }
 
-        protected Weapon SetMaxLevel(int maxLevel)
+        protected async Task PlayAttackSound()
         {
-            _maxLevel = maxLevel;
-            return this;
+            // TODO: consider safe invoke sound
+            if (_audioManager != null)
+            {
+                await _audioManager.PlaySound(_attackSound);
+            }
         }
 
-        protected Weapon SetAttackSpeed(int speed)
+
+        /// <summary>
+        /// Update status match with current level
+        /// </summary>
+        private void UpdateStatus()
         {
-            _attackSpeed = speed;
-            return this;
+            int currentLevel = _level;
+            int newDamage = _model.BaseDamage + (currentLevel * _model.DamageIncrement);
+            int newAttackSpeed = _model.BaseSpeed + (currentLevel * _model.SpeedIncrement);
+            _damage = newDamage;
+            _attackSpeed = newAttackSpeed;
         }
     }
 }
