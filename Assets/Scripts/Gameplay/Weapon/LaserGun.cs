@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using SmileProject.Generic;
+using SmileProject.Generic.Pooling;
 using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 

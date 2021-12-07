@@ -1,4 +1,4 @@
-using SmileProject.Generic;
+using SmileProject.Generic.Pooling;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay

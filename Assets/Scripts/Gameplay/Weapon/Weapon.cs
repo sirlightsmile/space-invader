@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using SmileProject.Generic;
+using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
