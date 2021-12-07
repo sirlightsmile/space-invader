@@ -39,5 +39,18 @@ namespace SmileProject.SpaceInvader.Gameplay
                 OnDestroy();
             }
         }
+
+        #region Pooling
+        // TODO: implement
+        public override void OnSpawn()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDespawn()
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
     }
 }

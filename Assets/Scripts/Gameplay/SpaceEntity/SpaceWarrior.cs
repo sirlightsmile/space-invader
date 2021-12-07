@@ -61,6 +61,19 @@ namespace SmileProject.SpaceInvader.Gameplay
             _weapon.SetAttackPointTransform(_attackPointTransform);
         }
 
+        #region Pooling
+        // TODO: implement
+        public override void OnSpawn()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDespawn()
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
+
         protected virtual void Destroy()
         {
             Dead?.Invoke(this);

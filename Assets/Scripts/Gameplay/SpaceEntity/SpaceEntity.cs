@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SmileProject.Generic.Pooling;
+using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
@@ -7,7 +8,7 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// <summary>
     /// Base object of every displayed object in gameplay scene
     /// </summary>
-    public abstract class SpaceEntity : MonoBehaviour
+    public abstract class SpaceEntity : PoolObject
     {
         /// <summary>
         /// Get sprite width
@@ -34,7 +35,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         }
 
         [SerializeField]
-        private SpriteRenderer _spriteRenderer;
+        protected SpriteRenderer _spriteRenderer;
 
         private Sprite[] _animateSprites = null;
 
@@ -47,6 +48,17 @@ namespace SmileProject.SpaceInvader.Gameplay
                 Debug.Assert(_spriteRenderer != null, "Missing sprite renderer reference in space object. Should assign reference in prefab.");
                 _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             }
+        }
+
+        /// <summary>
+        /// Set position on world space
+        /// </summary>
+        /// <param name="pos">vector 2 position</param>
+        /// <returns></returns>
+        public SpaceEntity SetPosition(Vector2 pos)
+        {
+            this.transform.position = pos;
+            return this;
         }
 
         /// <summary>
@@ -94,6 +106,10 @@ namespace SmileProject.SpaceInvader.Gameplay
             SetSprite(currentFrameSprite);
         }
 
+        /// <summary>
+        /// On entity trigger enter. Manage every event that affects this object
+        /// </summary>
+        /// <param name="other"></param>
         protected abstract void OnTriggerEnter2D(Collider2D other);
     }
 }
