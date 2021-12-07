@@ -1,32 +1,33 @@
 using System.Collections.Generic;
+using SmileProject.Generic.Utilities;
 
-namespace SmileProject.Generic
+namespace SmileProject.Generic.Audio
 {
-	public abstract class SoundKeys : StringEnum<SoundKeys>
-	{
-		protected static List<SoundKeys> _soundList = new List<SoundKeys>();
-		protected readonly string _assetKey;
-		protected readonly string _mixerKey;
-		protected SoundKeys(string value, string assetKey, string mixerKey) : base(value)
-		{
-			_assetKey = assetKey;
-			_mixerKey = mixerKey;
-			_soundList.Add(this);
-		}
+    public abstract class SoundKeys : StringEnum<SoundKeys>
+    {
+        protected static List<SoundKeys> _soundList = new List<SoundKeys>();
+        protected readonly string _assetKey;
+        protected readonly string _mixerKey;
+        protected SoundKeys(string value, string assetKey, string mixerKey) : base(value)
+        {
+            _assetKey = assetKey;
+            _mixerKey = mixerKey;
+            _soundList.Add(this);
+        }
 
-		public virtual string GetAssetKey()
-		{
-			return _assetKey;
-		}
+        public virtual string GetAssetKey()
+        {
+            return _assetKey;
+        }
 
-		public virtual string GetMixerKey()
-		{
-			return _mixerKey;
-		}
+        public virtual string GetMixerKey()
+        {
+            return _mixerKey;
+        }
 
-		public virtual IEnumerable<SoundKeys> GetAll()
-		{
-			return _soundList;
-		}
-	}
+        public virtual IEnumerable<SoundKeys> GetAll()
+        {
+            return _soundList;
+        }
+    }
 }
