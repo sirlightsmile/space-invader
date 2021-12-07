@@ -4,7 +4,7 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// Represent object tags in unity inspector
     /// Contains only tags related to gameplay
     /// </summary>
-    public sealed class Tags
+    public static class Tags
     {
         public const string Bullet = "Bullet";
         public const string Player = "Player";
