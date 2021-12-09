@@ -1,4 +1,4 @@
-namespace SmileProject.SpaceInvader.GameData
+namespace SmileProject.SpaceInvader.Constant
 {
     public enum BulletType
     {

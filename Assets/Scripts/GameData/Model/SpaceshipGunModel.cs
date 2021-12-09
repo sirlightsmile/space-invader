@@ -1,5 +1,5 @@
-using System;
 using Newtonsoft.Json;
+using SmileProject.SpaceInvader.Constant;
 
 namespace SmileProject.SpaceInvader.GameData
 {

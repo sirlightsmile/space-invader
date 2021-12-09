@@ -20,7 +20,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <summary>
         /// Invoke when SpaceWarrior hp reached zero
         /// </summary>
-        public event Action<Spaceship> Dead;
+        public event Action<Spaceship> Destroyed;
 
         public int HP { get; private set; }
 
@@ -31,16 +31,43 @@ namespace SmileProject.SpaceInvader.Gameplay
         protected AudioManager _audioManager;
         protected SoundKeys _getHitSound, _destroyedSound;
 
+        /// <summary>
+        /// Setup spaceship from spaceship model
+        /// </summary>
+        /// <param name="spaceshipModel"></param>
+        /// <typeparam name="T"></typeparam>
         public virtual void Setup<T>(T spaceshipModel) where T : SpaceshipModel
         {
             HP = spaceshipModel.HP;
         }
 
+        /// <summary>
+        /// Check weather spaceship hp reached 0 or not.
+        /// </summary>
+        /// <returns>true if hp reached 0</returns>
         public virtual bool IsDead()
         {
             return HP <= 0;
         }
 
+        /// <summary>
+        /// Invoke attack from spaceship's weapon
+        /// </summary>
+        public virtual void Shoot()
+        {
+            if (_weapon == null)
+            {
+                Debug.LogAssertion("Spaceship weapon should not be null.");
+                return;
+            }
+            _weapon.Attack(this);
+        }
+
+        /// <summary>
+        /// Call when spaceship take damage
+        /// </summary>
+        /// <param name="damage">damage received</param>
+        /// <param name="attacker">attacker spaceship reference</param>
         public virtual void GetHit(int damage, Spaceship attacker)
         {
             int result = HP - damage;
@@ -57,10 +84,15 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
         }
 
-        public virtual async Task SetWeapon(SpaceshipGun newWeapon)
+        /// <summary>
+        /// Attach weapon to spaceship
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
+        public virtual async Task SetWeapon(SpaceshipGun weapon)
         {
-            await newWeapon.Setup();
-            _weapon = newWeapon;
+            await weapon.Setup();
+            _weapon = weapon;
             _weapon.SetAttackPointTransform(_attackPointTransform);
         }
 
@@ -102,7 +134,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         protected virtual void Destroy()
         {
-            Dead?.Invoke(this);
+            Destroyed?.Invoke(this);
         }
     }
 }

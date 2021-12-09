@@ -1,15 +1,10 @@
 using System;
 using SmileProject.Generic.Audio;
+using SmileProject.SpaceInvader.Constant;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Player
 {
-    public enum MoveDirection
-    {
-        Left = -1,
-        Right = 1
-    }
-
     public class PlayerSpaceship : Spaceship
     {
         [SerializeField]
