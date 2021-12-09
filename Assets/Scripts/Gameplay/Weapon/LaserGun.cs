@@ -8,16 +8,16 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// <summary>
     /// Common laser gun. Infinity bullet.
     /// </summary>
-    public class LaserGun : Weapon<LaserGunModel>
+    public class LaserGun : Weapon<SpaceshipGunModel>
     {
         private PoolManager _poolManager;
 
-        public LaserGun(LaserGunModel model, PoolManager poolManager) : base(model)
+        public LaserGun(SpaceshipGunModel model, PoolManager poolManager) : base(model)
         {
             _poolManager = poolManager;
         }
 
-        public override void Attack(SpaceWarrior attacker)
+        public override void Attack(Spaceship attacker)
         {
             Shoot(attacker);
         }
@@ -27,7 +27,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             await Reload();
         }
 
-        private void Shoot(SpaceWarrior attacker)
+        private void Shoot(Spaceship attacker)
         {
             Bullet bullet = _poolManager.GetItem<Bullet>(Model.BulletType.ToString());
             Transform attackPoint = AttackPoint.transform;

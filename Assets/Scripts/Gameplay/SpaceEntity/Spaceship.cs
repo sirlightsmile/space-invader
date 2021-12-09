@@ -8,17 +8,17 @@ namespace SmileProject.SpaceInvader.Gameplay
     /// <summary>
     /// Base object of warrior in space
     /// </summary>
-    public abstract class SpaceWarrior : SpaceEntity
+    public abstract class Spaceship : SpaceEntity
     {
         /// <summary>
         /// Invoke when got hit <Attacker, Defender>
         /// </summary>
-        public event Action<SpaceWarrior, SpaceWarrior> GotHit;
+        public event Action<Spaceship, Spaceship> GotHit;
 
         /// <summary>
         /// Invoke when SpaceWarrior hp reached zero
         /// </summary>
-        public event Action<SpaceWarrior> Dead;
+        public event Action<Spaceship> Dead;
 
         public int HP { get; private set; }
 
@@ -27,7 +27,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         protected Weapon<WeaponModel> _weapon;
 
-        public SpaceWarrior SetHP(int hp)
+        public Spaceship SetHP(int hp)
         {
             HP = hp;
             return this;
@@ -38,7 +38,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             return HP <= 0;
         }
 
-        public virtual void GetHit(int damage, SpaceWarrior attacker)
+        public virtual void GetHit(int damage, Spaceship attacker)
         {
             int result = HP - damage;
             HP = Mathf.Clamp(result, 0, HP);

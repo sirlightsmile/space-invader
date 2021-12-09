@@ -14,7 +14,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// Get sprite width
         /// </summary>
         /// <value>sprite width</value>
-        protected float Width
+        public float Width
         {
             get
             {
@@ -26,7 +26,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// Get sprite height
         /// </summary>
         /// <value>sprite height</value>
-        protected float Height
+        public float Height
         {
             get
             {

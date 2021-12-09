@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
 {
-    public class Alien : SpaceWarrior
+    public class EnemySpaceship : Spaceship
     {
         public int Score { get; private set; }
 
-        public Alien SetColor(Color color)
+        public EnemySpaceship SetColor(Color color)
         {
             _spriteRenderer.color = color;
             return this;
@@ -17,7 +17,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         /// </summary>
         /// <param name="score"></param>
         /// <returns></returns>
-        public Alien SetScore(int score)
+        public EnemySpaceship SetScore(int score)
         {
             Debug.Assert(score > 0, "Kill score should be more than zero.");
             Score = score;

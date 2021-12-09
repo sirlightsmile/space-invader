@@ -46,7 +46,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// Invoke weapon attack
         /// </summary>
         /// <param name="attacker"></param>
-        public abstract void Attack(SpaceWarrior attacker);
+        public abstract void Attack(Spaceship attacker);
 
         /// <summary>
         /// Prepare weapon for use. Setting up or loading required assets
