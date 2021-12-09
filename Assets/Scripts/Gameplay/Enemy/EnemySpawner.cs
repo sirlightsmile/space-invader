@@ -1,4 +1,5 @@
-using SmileProject.Generic.Pooling;
+using System.Threading.Tasks;
+using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
@@ -14,15 +15,16 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         [SerializeField]
         private float _heightInterval = 1f;
 
-        private AlienFactory _factory;
-        private PoolManager _pooling;
+        private EnemySpaceshipBuilder _enemyBuilder;
+        private GameDataManager _gameDataManager;
 
-        public EnemySpawner()
+        public EnemySpawner(EnemySpaceshipBuilder enemyBuilder, GameDataManager gameDataManager)
         {
-            // _pooling.CreatePool<Alien>();
+            _enemyBuilder = enemyBuilder;
+            _gameDataManager = gameDataManager;
         }
 
-        public void SpawnEnemies()
+        public async Task SpawnEnemies()
         {
             // TODO: config later
             int rows = 10;
@@ -32,11 +34,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
                 for (int x = 0; x < rows; x++)
                 {
                     Vector2 startPos = Vector2.zero;
-                    EnemySpaceship alien = _factory.GetRandomAlien();
-                    alien.transform.SetParent(_container);
-                    float xInterval = ((alien.Width / 2) + _widthInterval);
-                    float yInterval = ((alien.Height / 2) + _heightInterval);
-                    alien.transform.localPosition = new Vector2(startPos.x + (x * xInterval), -(startPos.y + (y * _heightInterval)));
+                    _gameDataManager.GetEnemySpaceshipModels();
+                    EnemySpaceship enemy = await _enemyBuilder.BuildRandomEnemySpaceship();
+                    enemy.transform.SetParent(_container);
+                    float xInterval = ((enemy.Width / 2) + _widthInterval);
+                    float yInterval = ((enemy.Height / 2) + _heightInterval);
+                    enemy.transform.localPosition = new Vector2(startPos.x + (x * xInterval), -(startPos.y + (y * _heightInterval)));
                 }
             }
         }

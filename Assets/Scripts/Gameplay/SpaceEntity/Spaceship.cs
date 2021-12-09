@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
-using SmileProject.SpaceInvader.Gameplay.Weapon;
+using SmileProject.SpaceInvader.Weapon;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay

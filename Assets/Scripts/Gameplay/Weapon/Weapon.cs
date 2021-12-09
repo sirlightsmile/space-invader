@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
+using SmileProject.SpaceInvader.Gameplay;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay.Weapon
+namespace SmileProject.SpaceInvader.Weapon
 {
     public abstract class Weapon<T> where T : WeaponModel
     {

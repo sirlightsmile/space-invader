@@ -5,7 +5,7 @@ using SmileProject.Generic.Audio;
 using SmileProject.Generic.Pooling;
 using SmileProject.Generic.ResourceManagement;
 using SmileProject.SpaceInvader.GameData;
-using SmileProject.SpaceInvader.Gameplay.Weapon;
+using SmileProject.SpaceInvader.Weapon;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {

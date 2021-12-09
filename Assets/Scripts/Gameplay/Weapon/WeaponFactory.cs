@@ -4,7 +4,7 @@ using SmileProject.SpaceInvader.GameData;
 using SmileProject.SpaceInvader.Sounds;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay.Weapon
+namespace SmileProject.SpaceInvader.Weapon
 {
     public class WeaponFactory
     {

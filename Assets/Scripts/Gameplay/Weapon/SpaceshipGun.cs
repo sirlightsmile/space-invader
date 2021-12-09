@@ -2,9 +2,10 @@ using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.Generic.Pooling;
 using SmileProject.SpaceInvader.GameData;
+using SmileProject.SpaceInvader.Gameplay;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay.Weapon
+namespace SmileProject.SpaceInvader.Weapon
 {
     /// <summary>
     /// Common laser gun. Infinity bullet.

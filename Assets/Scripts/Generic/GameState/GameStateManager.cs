@@ -9,8 +9,8 @@ namespace SmileProject.Generic.GameState
     {
         public delegate void StateChangedHandler(BaseGameState oldState, BaseGameState newState);
         public event StateChangedHandler StateChanged;
-
         public BaseGameState CurrentState { get; private set; }
+
         public int CurrentStateID
         {
             get
@@ -19,8 +19,10 @@ namespace SmileProject.Generic.GameState
                 return CurrentState.ID;
             }
         }
+
         public bool IsInitialized { get; private set; }
         private Dictionary<int, BaseGameState> _states;
+        private bool isStateChanging = false;
 
         public async Task Init(IEnumerable<BaseGameState> states, int initialStateID)
         {
@@ -60,12 +62,22 @@ namespace SmileProject.Generic.GameState
             BaseGameState oldState = CurrentState;
 
             Debug.Log(string.Format("State Changing from {0} to {1}", oldState.Name, newState.Name));
+            isStateChanging = true;
             await oldState.OnStateExit();
             CurrentState = newState;
             await newState.OnStateEnter();
+            isStateChanging = false;
             Debug.Log(string.Format("State Changed from {0} to {1}", oldState.Name, newState.Name));
 
             StateChanged?.Invoke(oldState, CurrentState);
+        }
+
+        private void Update()
+        {
+            if (!isStateChanging)
+            {
+                CurrentState?.OnStateUpdate();
+            }
         }
 
         private void InitStates(IEnumerable<BaseGameState> states)

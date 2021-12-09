@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
+using Configs;
 using System.Threading.Tasks;
+using SmileProject.Generic.GameState;
 using UnityEngine;
 
-namespace SmileProject.Generic.GameState
+namespace SmileProject.SpaceInvader.Gameplay
 {
     /// <summary>
     /// This class controll game state life time
@@ -15,6 +15,11 @@ namespace SmileProject.Generic.GameState
         public GameController(GameStateManager gameStateManager)
         {
             _gameStateManager = gameStateManager;
+        }
+
+        public async Task StartBattle()
+        {
+            await _gameStateManager.ChangeStateAsync(GameStates.Battle);
         }
     }
 }
