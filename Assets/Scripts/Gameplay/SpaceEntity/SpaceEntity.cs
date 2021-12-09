@@ -66,10 +66,9 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         /// <param name="sprite">sprite</param>
         /// <returns></returns>
-        public SpaceEntity SetSprite(Sprite sprite)
+        public void SetSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
-            return this;
         }
 
         /// <summary>

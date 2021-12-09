@@ -6,9 +6,10 @@ using UnityEngine;
 namespace SmileProject.SpaceInvader.Gameplay.Player
 {
     public class PlayerController
-    {       /// <summary>
-            /// Invoke when player get hit with current hp
-            /// </summary>
+    {
+        /// <summary>
+        /// Invoke when player get hit with current hp
+        /// </summary>
         public Action<int> PlayerGetHit;
 
         /// <summary>

@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
+using SmileProject.SpaceInvader.Gameplay.Weapon;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
@@ -25,12 +27,13 @@ namespace SmileProject.SpaceInvader.Gameplay
         [SerializeField]
         protected Transform _attackPointTransform;
 
-        protected Weapon<WeaponModel> _weapon;
+        protected SpaceshipGun _weapon;
+        protected AudioManager _audioManager;
+        protected SoundKeys _getHitSound, _destroyedSound;
 
-        public Spaceship SetHP(int hp)
+        public virtual void Setup<T>(T spaceshipModel) where T : SpaceshipModel
         {
-            HP = hp;
-            return this;
+            HP = spaceshipModel.HP;
         }
 
         public virtual bool IsDead()
@@ -50,15 +53,38 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
             else
             {
-                // TODO: play get hit sound
+                var _ = PlaySound(_getHitSound);
             }
         }
 
-        public virtual async Task SetWeapon(Weapon<WeaponModel> newWeapon)
+        public virtual async Task SetWeapon(SpaceshipGun newWeapon)
         {
             await newWeapon.Setup();
             _weapon = newWeapon;
             _weapon.SetAttackPointTransform(_attackPointTransform);
+        }
+
+        public virtual void SetSounds(AudioManager audioManager, SoundKeys getHitSound, SoundKeys destroyedSound)
+        {
+            _audioManager = audioManager;
+            _getHitSound = getHitSound;
+            _destroyedSound = destroyedSound;
+        }
+
+        public async Task<int> PlaySound(SoundKeys soundKey)
+        {
+            try
+            {
+                if (_audioManager != null && soundKey != null)
+                {
+                    return await _audioManager.PlaySound(soundKey);
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
+            return -1;
         }
 
         #region Pooling

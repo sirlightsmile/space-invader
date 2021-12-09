@@ -1,18 +1,21 @@
 using System.Threading.Tasks;
+using SmileProject.Generic.Audio;
 using SmileProject.Generic.Pooling;
 using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay
+namespace SmileProject.SpaceInvader.Gameplay.Weapon
 {
     /// <summary>
     /// Common laser gun. Infinity bullet.
     /// </summary>
-    public class LaserGun : Weapon<SpaceshipGunModel>
+    public class SpaceshipGun : Weapon<SpaceshipGunModel>
     {
         private PoolManager _poolManager;
+        private AudioManager _audioManager;
+        private SoundKeys _shootSound;
 
-        public LaserGun(SpaceshipGunModel model, PoolManager poolManager) : base(model)
+        public SpaceshipGun(SpaceshipGunModel model, PoolManager poolManager) : base(model)
         {
             _poolManager = poolManager;
         }
@@ -52,6 +55,12 @@ namespace SmileProject.SpaceInvader.Gameplay
                 };
                 await _poolManager.CreatePool<Bullet>(options);
             }
+        }
+
+        public void SetSounds(AudioManager audioManager, SoundKeys shootSound)
+        {
+            _audioManager = audioManager;
+            _shootSound = shootSound;
         }
     }
 }

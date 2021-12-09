@@ -3,7 +3,7 @@ using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay
+namespace SmileProject.SpaceInvader.Gameplay.Weapon
 {
     public abstract class Weapon<T> where T : WeaponModel
     {

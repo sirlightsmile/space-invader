@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace SmileProject.SpaceInvader.GameData
 {
-    public class PlayerSpaceshipModel : BaseSpaceshipModel
+    public class PlayerSpaceshipModel : SpaceshipModel
     {
         [JsonProperty("speed")]
         /// <summary>

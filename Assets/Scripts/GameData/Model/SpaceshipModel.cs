@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace SmileProject.SpaceInvader.GameData
 {
-    public class BaseSpaceshipModel
+    public class SpaceshipModel
     {
         [JsonProperty("id")]
         /// <summary>

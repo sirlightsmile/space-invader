@@ -1,3 +1,5 @@
+using System;
+using SmileProject.Generic.Audio;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Player
@@ -41,6 +43,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
             float posX = this.transform.position.x + (directionValue * (_moveSpeed * Time.deltaTime));
             posX = Mathf.Clamp(posX, -_moveBorder, _moveBorder);
             this.transform.position = new Vector3(posX, this.transform.position.y, this.transform.position.z);
+        }
+
+        internal void SetSounds(AudioManager audioManager, object impact, object playerExplosion)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

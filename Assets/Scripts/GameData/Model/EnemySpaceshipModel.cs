@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SmileProject.SpaceInvader.GameData
 {
-    public class EnemySpaceshipModel : BaseSpaceshipModel
+    public class EnemySpaceshipModel : SpaceshipModel
     {
         [JsonProperty("score")]
         /// <summary>
