@@ -7,10 +7,10 @@ namespace SmileProject.Generic.GameState
         public readonly string Name;
         public readonly int ID;
 
-        public BaseGameState(string name, int Id)
+        public BaseGameState(int Id, string name)
         {
-            this.Name = name;
             this.ID = Id;
+            this.Name = name;
         }
 
         public abstract Task OnStateEnter();

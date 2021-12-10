@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
+using SmileProject.SpaceInvader.Gameplay;
 
 namespace SmileProject.Generic.GameState
 {
-    public class MenuState : BaseGameState
+    public class PauseState : SpaceInvaderGameState
     {
-        public MenuState(string name, int Id) : base(name, Id)
+        public PauseState(int Id, string name, GameController gameController) : base(Id, name, gameController)
         {
         }
 

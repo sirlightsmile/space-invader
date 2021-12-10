@@ -61,13 +61,16 @@ namespace SmileProject.Generic.GameState
             Debug.Assert(newState != null, "Invalid target state");
             BaseGameState oldState = CurrentState;
 
-            Debug.Log(string.Format("State Changing from {0} to {1}", oldState.Name, newState.Name));
+            Debug.Log(string.Format("State Changing from {0} to {1}", oldState?.Name, newState.Name));
             isStateChanging = true;
-            await oldState.OnStateExit();
+            if (oldState != null)
+            {
+                await oldState.OnStateExit();
+            }
             CurrentState = newState;
             await newState.OnStateEnter();
             isStateChanging = false;
-            Debug.Log(string.Format("State Changed from {0} to {1}", oldState.Name, newState.Name));
+            Debug.Log(string.Format("State Changed from {0} to {1}", oldState?.Name, newState.Name));
 
             StateChanged?.Invoke(oldState, CurrentState);
         }
