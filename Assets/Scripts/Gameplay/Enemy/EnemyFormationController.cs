@@ -1,11 +1,22 @@
+using System;
 using System.Threading.Tasks;
 using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
 {
-    public class EnemySpawner
+    public class EnemyFormationController
     {
+        /// <summary>
+        /// Invoke when add new spaceship to formation
+        /// </summary>
+        public event Action<Spaceship> SpaceshipAdded;
+
+        /// <summary>
+		/// Invoke when all spaceship reached all formation point
+		/// </summary>
+		public event Action FormationReady;
+
         [SerializeField]
         private Transform _container;
 
@@ -18,10 +29,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         private EnemySpaceshipBuilder _enemyBuilder;
         private GameDataManager _gameDataManager;
 
-        public EnemySpawner(EnemySpaceshipBuilder enemyBuilder, GameDataManager gameDataManager)
+        public EnemyFormationController(EnemySpaceshipBuilder enemyBuilder, GameDataManager gameDataManager)
         {
             _enemyBuilder = enemyBuilder;
             _gameDataManager = gameDataManager;
+            _enemyBuilder.SpaceshipBuilded += OnSpaceshipBuilded;
         }
 
         public async Task SpawnEnemies()
@@ -42,6 +54,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
                     enemy.transform.localPosition = new Vector2(startPos.x + (x * xInterval), -(startPos.y + (y * _heightInterval)));
                 }
             }
+            FormationReady?.Invoke();
+        }
+
+        private void OnSpaceshipBuilded(Spaceship spaceship)
+        {
+            SpaceshipAdded?.Invoke(spaceship);
         }
     }
 }
