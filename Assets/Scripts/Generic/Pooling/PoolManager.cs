@@ -107,14 +107,20 @@ namespace SmileProject.Generic.Pooling
             container.transform.SetParent(_poolContainer);
             string assetKey = options.AssetKey;
             T poolObject = await _resourceLoader.LoadPrefab<T>(assetKey);
-            _resourceLoader.Release(poolObject.gameObject);
+
+            if (poolObject == null)
+            {
+                Debug.LogAssertion($"Pool name [{poolName}] asset not found.");
+                return;
+            }
+
             PoolInfo poolInfo = new PoolInfo(options, container.transform, poolObject);
             _poolInfoDict[poolName] = poolInfo;
             AddObjectsToPool(poolInfo, options.InitialSize);
         }
 
         /// <summary>
-        /// Destroy pool from pool manager
+        /// Destroy pool from pool manager and release instance
         /// </summary>
         /// <param name="poolName">Pool name to destroy</param>
         public void DestroyPool(string poolName)
@@ -126,6 +132,7 @@ namespace SmileProject.Generic.Pooling
                 return;
             }
             Destroy(poolInfo.Container.gameObject);
+            _resourceLoader.Release(poolInfo.Prefab);
             _poolInfoDict.Remove(poolName);
             Debug.Log($"Destroy pool : [{poolName}]");
         }
@@ -144,11 +151,11 @@ namespace SmileProject.Generic.Pooling
         {
             for (int i = 0; i < extendAmount; i++)
             {
-                AddObjectToPoolAsync(poolInfo);
+                AddObjectToPool(poolInfo);
             }
         }
 
-        private void AddObjectToPoolAsync(PoolInfo poolInfo)
+        private void AddObjectToPool(PoolInfo poolInfo)
         {
             PoolOptions options = poolInfo.Options;
             PoolObject poolObj = GameObject.Instantiate<PoolObject>(poolInfo.Prefab, _poolContainer);

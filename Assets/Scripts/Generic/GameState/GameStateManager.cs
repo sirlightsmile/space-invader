@@ -63,12 +63,17 @@ namespace SmileProject.Generic.GameState
 
             Debug.Log(string.Format("State Changing from {0} to {1}", oldState?.Name, newState.Name));
             isStateChanging = true;
-            if (oldState != null)
+            var exitTask = oldState?.OnStateExit();
+            if (exitTask != null)
             {
-                await oldState.OnStateExit();
+                await exitTask;
             }
             CurrentState = newState;
-            await newState.OnStateEnter();
+            var enterTask = newState.OnStateEnter();
+            if (enterTask != null)
+            {
+                await enterTask;
+            }
             isStateChanging = false;
             Debug.Log(string.Format("State Changed from {0} to {1}", oldState?.Name, newState.Name));
 

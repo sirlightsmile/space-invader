@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SmileProject.Generic.Utilities
@@ -15,6 +16,23 @@ namespace SmileProject.Generic.Utilities
             try
             {
                 action();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
+        }
+
+        /// <summary>
+        /// Invoke specific async function without any returning result
+        /// any exception will log to error tracker without crashing the game
+        /// </summary>
+        /// <param name="function"></param>
+        public static void InvokeAsync(Func<Task> function)
+        {
+            try
+            {
+                function();
             }
             catch (Exception exception)
             {

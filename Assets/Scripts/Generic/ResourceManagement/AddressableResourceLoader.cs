@@ -9,10 +9,14 @@ using System.Collections.Generic;
 namespace SmileProject.Generic.ResourceManagement
 {
     /// <summary>
-    /// Addressable assets resource loader
+    /// Class for load resources by addressable assets
     /// </summary>
     public class AddressableResourceLoader : IResourceLoader
     {
+        /// <summary>
+        /// Initialize Addressables assets
+        /// </summary>
+        /// <returns></returns>
         public async Task InitializeAsync()
         {
             AsyncOperationHandle<IResourceLocator> initialize = Addressables.InitializeAsync();
@@ -35,6 +39,12 @@ namespace SmileProject.Generic.ResourceManagement
             await Task.WhenAll(tasks);
         }
 
+        /// <summary>
+        /// Load assets from addressable assets key
+        /// </summary>
+        /// <param name="key">addressable assets key</param>
+        /// <typeparam name="T">resource type</typeparam>
+        /// <returns></returns>
         public async Task<T> Load<T>(string key)
         {
             AsyncOperationHandle<T> loadAssetAsync = Addressables.LoadAssetAsync<T>(key);
@@ -49,6 +59,12 @@ namespace SmileProject.Generic.ResourceManagement
             return loadedAsset;
         }
 
+        /// <summary>
+        /// Load prefab and get type
+        /// </summary>
+        /// <param name="key">addressable assets key</param>
+        /// <typeparam name="T">script type attach to prefab</typeparam>
+        /// <returns></returns>
         public async Task<T> LoadPrefab<T>(string key)
         {
             GameObject loadedPrefab = await Load<GameObject>(key);
