@@ -22,6 +22,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             string weaponId = model.BasicWeaponId;
             SpaceshipGun weapon = !String.IsNullOrEmpty(weaponId) ? _weaponFactory.CreateSpaceshipGunById(weaponId) : _weaponFactory.CreateRandomSpaceshipGun();
             await spaceship.SetWeapon(weapon);
+            spaceship.SetBorder();
             spaceship.SetSounds(_audioManager, GameSoundKeys.Impact, GameSoundKeys.PlayerExplosion);
             return spaceship;
         }

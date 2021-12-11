@@ -1,5 +1,3 @@
-using System;
-using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.Constant;
 using UnityEngine;
 
@@ -11,11 +9,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         private float _moveSpeed;
 
         private float _moveBorder;
-
-        private void Start()
-        {
-            SetBorder();
-        }
 
         /// <summary>
         /// Set speed to player movement
@@ -40,15 +33,10 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
             this.transform.position = new Vector3(posX, this.transform.position.y, this.transform.position.z);
         }
 
-        internal void SetSounds(AudioManager audioManager, object impact, object playerExplosion)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
-        /// Setup world border for move
+        /// Setup world border for clamp movement
         /// </summary>
-        private void SetBorder()
+        public void SetBorder()
         {
             float halfSpriteSize = Width / 2;
             float borderRight = Screen.width - halfSpriteSize;
@@ -58,8 +46,16 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            // TODO: on trigger enter bullet/invader
-            throw new System.NotImplementedException();
+            if (other.tag == Tags.Bullet)
+            {
+                Bullet bullet = other.GetComponent<Bullet>();
+                GetHit(bullet.Damage, bullet.Owner);
+            }
+            else if (other.tag == Tags.Invader)
+            {
+                // instant dead
+                GetHit(HP, other.GetComponent<Spaceship>());
+            }
         }
     }
 }

@@ -79,7 +79,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             {
                 spaceship = await _resourceLoader.InstantiateAsync<T>(templateKey, null, true);
             }
-            // spaceship.Setup(model);
+            spaceship.Setup(model);
             spaceship.SetActive(true);
             string spriteName = GetAssetPrefix() + model.AssetName;
             await _resourceLoader.SetSpriteAsync(spriteName, spaceship.SetSprite);
