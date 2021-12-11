@@ -11,10 +11,10 @@ namespace SmileProject.SpaceInvader.GameData
         /// </summary>
         public int Score { get; private set; }
 
-        [JsonProperty("color")]
+        [JsonProperty("type")]
         /// <summary>
-        /// Color tint for enemy spaceship
+        /// Enemy type will apply custom color to enemy prefab
         /// </summary>
-        public Color Color { get; private set; }
+        public string Type { get; private set; }
     }
 }

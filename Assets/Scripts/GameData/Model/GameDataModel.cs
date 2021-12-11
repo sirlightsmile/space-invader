@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace SmileProject.SpaceInvader.GameData
 {
-    [Serializable]
     public class GameDataModel
     {
         [JsonProperty("spaceship_gun_model")]

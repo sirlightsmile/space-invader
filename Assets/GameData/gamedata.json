@@ -1,7 +1,7 @@
 {
-  "laser_gun_model": [
+  "spaceship_gun_model": [
     {
-      "id": "lg01",
+      "id": "sg01",
       "bullet_type": "TypeA",
       "bullet_asset": "BulletPrefabs/TypeA.prefab",
       "base_damage": 1,
@@ -11,7 +11,7 @@
       "max_level": 5
     },
     {
-      "id": "lg02",
+      "id": "sg02",
       "bullet_type": "TypeB",
       "bullet_asset": "BulletPrefabs/TypeB.prefab",
       "base_damage": 1,
@@ -21,38 +21,38 @@
       "max_level": 5
     }
   ],
-  "player_warrior_model": [
+  "player_spaceship_model": [
     {
-      "id": "pw01",
-      "asset_name": "PlayerShip01.png",
+      "id": "ps01",
+      "asset_name": "PlayerSprite",
       "hp": 5,
       "speed": 10,
-      "basic_weapon_id": "ls01"
+      "basic_weapon_id": "sg01"
     }
   ],
-  "enemy_warrior_model": [
+  "enemy_spaceship_model": [
     {
-      "id": "ew01",
+      "id": "es01",
       "asset_name": "enemyBlack1.png",
-      "color": "blue",
+      "type": "BlueAlien",
       "hp": 3,
-      "basic_weapon_id": "lg02",
+      "basic_weapon_id": "sg02",
       "score": 30
     },
     {
-      "id": "ew02",
+      "id": "es02",
       "asset_name": "enemyBlue1.png",
-      "color": "red",
+      "type": "RedAlien",
       "hp": 2,
-      "basic_weapon_id": "lg02",
+      "basic_weapon_id": "sg02",
       "score": 20
     },
     {
-      "id": "ew03",
+      "id": "es03",
       "asset_name": "enemyGreen1.png",
-      "color": "yellow",
+      "type": "YellowAlien",
       "hp": 1,
-      "basic_weapon_id": "lg02",
+      "basic_weapon_id": "sg02",
       "score": 10
     }
   ]
