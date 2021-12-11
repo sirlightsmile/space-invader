@@ -171,7 +171,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5451182388425749262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af7a160ca3490342ab63142622d7a89, type: 3}
+  m_Script: {fileID: 11500000, guid: a6a952d2287aaf449baf23cb5101e81d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 3718726159340500531}
+  _attackPointTransform: {fileID: 0}
