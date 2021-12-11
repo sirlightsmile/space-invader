@@ -10,7 +10,7 @@ namespace SmileProject.SpaceInvader.GameData
         /// <summary>
         /// Key saved in addressable assets for load game data
         /// </summary>
-        private const string GAME_DATA_KEY = "GameData";
+        private const string GameDataKey = "GameData";
         private GameDataModel _gameData;
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace SmileProject.SpaceInvader.GameData
         /// <returns></returns>
         public async Task Initialize(IResourceLoader resourceLoader)
         {
-            _gameData = await resourceLoader.LoadJsonAsModel<GameDataModel>(GAME_DATA_KEY);
+            _gameData = await resourceLoader.LoadJsonAsModel<GameDataModel>(GameDataKey);
             Debug.Log("Game Data Initialized.");
         }
 
