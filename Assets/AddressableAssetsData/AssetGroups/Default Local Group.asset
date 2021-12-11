@@ -20,15 +20,38 @@ MonoBehaviour:
   - m_GUID: 899753f64df9e794eb6ca42f6cb51332
     m_Address: EnemySprite
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - gameplay
   - m_GUID: f7b0c8993a054b241bf6e749bbb6df64
     m_Address: PlayerSprite
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - gameplay
   - m_GUID: ab2d51ddf0fc1cb49aa8055e93289ae5
     m_Address: ShieldSprite
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 9c94337c5f17050458b5999f93e2e68e
+    m_Address: EnemyPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 3b5ba9e377c71284f95f520861c7c19a
+    m_Address: PlayerPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: eaeada1e3b937844ea8ed8cf9a48ad01
+    m_Address: GameplaySounds
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 87d560f5d72370e4094cc93a7741cf18
+    m_Address: BulletPrefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7adbe51be6ddb7e4082582cdf01515d0, type: 2}
   m_SchemaSet:

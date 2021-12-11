@@ -58,6 +58,8 @@ SpriteAtlas:
   - {fileID: 7388399842426930641, guid: f7b0c8993a054b241bf6e749bbb6df64, type: 3}
   - {fileID: 4334783836991956000, guid: f7b0c8993a054b241bf6e749bbb6df64, type: 3}
   - {fileID: 6757282713640645180, guid: f7b0c8993a054b241bf6e749bbb6df64, type: 3}
+  - {fileID: 2389193319765324094, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
+  - {fileID: 1691966074973790518, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
   - {fileID: 21300000, guid: 76b2a9ce52bcc5548b80541512e3dae0, type: 3}
   m_PackedSpriteNamesToIndex:
   - enemy_0
@@ -65,6 +67,8 @@ SpriteAtlas:
   - player_1
   - player_0
   - player_2
+  - shield_0
+  - shield_2
   - bullet
   m_Tag: gameplay_atlas
   m_IsVariant: 0
