@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SmileProject.SpaceInvader.UI
+namespace SmileProject.SpaceInvader.Gameplay.UI
 {
     public class WaveChangeComp : BaseUIComponent
     {
