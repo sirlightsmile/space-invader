@@ -239,6 +239,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
             _enemyManager.Update();
             Timer = Time.time - _startTime;
+            _uiManager.UpdateTimerUI(CurrentTime);
 
             if (Timer > TotalTime)
             {

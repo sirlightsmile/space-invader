@@ -17,9 +17,9 @@ MonoBehaviour:
   _shieldDurability: 5
   _playerConfig:
     _playerSpaceshipId: ps01
-    _playerFireRate: 0.3
+    _playerFireRate: 3
   _enemyConfig:
-    _movementSpeed: 0
-    _randomShootChance: 0
-    _triggerShootInterval: 0
-    _shootAsyncInterval: 0
+    _movementSpeed: 0.2
+    _randomShootChance: 0.1
+    _triggerShootInterval: 4
+    _shootAsyncInterval: 3

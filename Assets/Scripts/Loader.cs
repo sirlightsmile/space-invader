@@ -31,6 +31,7 @@ namespace SmileProject.SpaceInvader
 
         private void Start()
         {
+            DontDestroyOnLoad(this);
             Initialize();
         }
 

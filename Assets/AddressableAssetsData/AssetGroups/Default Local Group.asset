@@ -17,12 +17,7 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ef604634871125d48919834865ab9851
   m_SerializeEntries:
-  - m_GUID: 899753f64df9e794eb6ca42f6cb51332
-    m_Address: EnemySprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - gameplay
-  - m_GUID: f7b0c8993a054b241bf6e749bbb6df64
+  - m_GUID: 7a7a7017dd833484993f20462676bb49
     m_Address: PlayerSprite
     m_ReadOnly: 0
     m_SerializedLabels:
@@ -54,6 +49,36 @@ MonoBehaviour:
     - gameplay
   - m_GUID: 437b17fca9d4e8846afaae991138963a
     m_Address: ShieldPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 72536a56c94c46144a43949203c9ab80
+    m_Address: EnemyFormationController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 08e9395bdb50dcd4aa5f65f51ead74b4
+    m_Address: GameplayController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 90429c3a0cb0bc245865581399beefc7
+    m_Address: GameplayUIManager
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 294148478924ac94ba961d5a707c6342
+    m_Address: EnemyBlue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: ebac59cf60cafdd49983975d161b367d
+    m_Address: EnemyRed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 501a07628c667024789152dac0f03725
+    m_Address: EnemyYellow
     m_ReadOnly: 0
     m_SerializedLabels:
     - gameplay

@@ -12,7 +12,7 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         private PlayerHpComp _playerHpComp;
 
         [SerializeField]
-        private WaveChangeComp _waveChangComp;
+        private TimerComp _timerComp;
 
         [SerializeField]
         private GameStartComp _gameStartComp;
@@ -37,7 +37,7 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         private void OnGameStart()
         {
             SetShowGameStart(false);
-            SetShowPlayerInfo(true);
+            SetShowGameUI(true);
         }
 
         private void OnGamePause(bool isPause)
@@ -51,6 +51,12 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         }
         #endregion
 
+        public void UpdateTimerUI(float timeLeft)
+        {
+            int time = Mathf.FloorToInt(timeLeft);
+            _timerComp.SetTimeText(time);
+        }
+
         public void ShowGameClear(int score)
         {
             _gameEndComp.Show($"Clear!\nYour score : {score}");
@@ -59,11 +65,6 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         public void ShowGameOver(int score)
         {
             _gameEndComp.Show($"Game Over\nYour score : {score}");
-        }
-
-        public void ShowWaveChange(int waveNumber, int showTime)
-        {
-            _waveChangComp.ShowWave(waveNumber, showTime);
         }
 
         public void SetGameplayMenu(bool isShow)
@@ -78,17 +79,19 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
             }
         }
 
-        public void SetShowPlayerInfo(bool isShow)
+        public void SetShowGameUI(bool isShow)
         {
             if (isShow)
             {
                 _playerScoreComp.Show();
                 _playerHpComp.Show();
+                _timerComp.Show();
             }
             else
             {
                 _playerScoreComp.Hide();
                 _playerHpComp.Hide();
+                _timerComp.Hide();
             }
         }
 
