@@ -14,13 +14,13 @@ namespace SmileProject.SpaceInvader.Sounds
         /// <param name="soundKey"></param>
         /// <param name="audioManager"></param>
         /// <returns></returns>
-        public static async Task<int> PlaySound(SoundKeys soundKey, AudioManager audioManager)
+        public static async Task<int> PlaySound(SoundKeys soundKey, AudioManager audioManager, bool loop = false)
         {
             try
             {
                 if (audioManager != null && soundKey != null)
                 {
-                    return await audioManager.PlaySound(soundKey);
+                    return await audioManager.PlaySound(soundKey, loop);
                 }
                 Debug.Assert(audioManager != null, "Audio manager should not be null when trying to play sound");
                 Debug.Assert(soundKey != null, "Sound key should not be null when trying to play sound");

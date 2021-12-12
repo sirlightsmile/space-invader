@@ -5,6 +5,7 @@ using SmileProject.Generic.Audio;
 using SmileProject.Generic.GameState;
 using SmileProject.Generic.Pooling;
 using SmileProject.Generic.ResourceManagement;
+using SmileProject.SpaceInvader.Config;
 using SmileProject.SpaceInvader.GameData;
 using SmileProject.SpaceInvader.Gameplay;
 using SmileProject.SpaceInvader.Gameplay.Enemy;
@@ -59,15 +60,17 @@ namespace SmileProject.SpaceInvader
         public async Task InitGameplayController(IResourceLoader resourceLoader, GameDataManager gameDataManager, PoolManager poolManager, AudioManager audioManager)
         {
             // init async
+            GameConfig gameConfig = null;
             GameplayController gameplayController = null;
             GameplayUIManager uiManager = null;
             InputManager inputManager = null;
             EnemyFormationController enemyFormationController = null;
+            Func<Task> loadGameConfig = async () => { gameConfig = await resourceLoader.Load<GameConfig>("GameConfig"); };
             Func<Task> initInputManager = async () => { inputManager = await resourceLoader.InstantiateAsync<InputManager>("InputManager"); };
             Func<Task> initFormationController = async () => { enemyFormationController = await resourceLoader.InstantiateAsync<EnemyFormationController>("EnemyFormationController"); };
             Func<Task> initGameController = async () => { gameplayController = await resourceLoader.InstantiateAsync<GameplayController>("GameplayController"); };
             Func<Task> initGameplayUIManager = async () => { uiManager = await resourceLoader.InstantiateAsync<GameplayUIManager>("GameplayUIManager"); };
-            await Task.WhenAll(new Task[] { initInputManager(), initGameController(), initGameplayUIManager(), initFormationController() });
+            await Task.WhenAll(new Task[] { loadGameConfig(), initInputManager(), initGameController(), initGameplayUIManager(), initFormationController() });
 
             WeaponFactory weaponFactory = new WeaponFactory(gameDataManager, poolManager, audioManager);
 
@@ -77,14 +80,16 @@ namespace SmileProject.SpaceInvader
 
             // inject enemy manager
             EnemySpaceshipBuilder enemiesBuilder = new EnemySpaceshipBuilder(resourceLoader, gameDataManager, weaponFactory, audioManager);
-            enemyFormationController.Initialize(enemiesBuilder, gameDataManager);
+            enemyFormationController.Initialize(enemiesBuilder);
             EnemyManager enemyManager = new EnemyManager(enemyFormationController);
+
+            ShieldPlacer shieldPlacer = new ShieldPlacer(resourceLoader, audioManager);
 
             await Task.WhenAll
             (
                 new Task[]
                 {
-                    gameplayController.Initialize(playerController, enemyManager, inputManager, audioManager, uiManager),
+                    gameplayController.Initialize(playerController, enemyManager, inputManager, audioManager, uiManager, shieldPlacer, gameConfig),
                     // TODO: adjust size
                     enemiesBuilder.SetupSpaceshipPool(poolManager, 20)
                 }
