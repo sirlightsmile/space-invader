@@ -1,15 +1,18 @@
-using SmileProject.Generic.Pooling;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
-    public class Bullet : PoolObject
+    public class Bullet : SpaceEntity
     {
+        /// <summary>
+        /// Owner of this bullet. Return null if owner already dead or inactive
+        /// </summary>
+        /// <value></value>
         public Spaceship Owner
         {
             get
             {
-                return _owner;
+                return _owner.IsActive && !_owner.IsDead() ? _owner : null;
             }
             private set
             {
@@ -17,9 +20,10 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
         }
 
+        public int Damage { get; private set; } = 1;
+
         // TODO: make config for these
         private float _bulletSpeed = 5f;
-        private int _damage = 1;
         private float _yBorder;
         private Spaceship _owner;
 
@@ -35,12 +39,10 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         public override void OnSpawn()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void OnDespawn()
         {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <returns>Bullet</returns>
         public Bullet SetDamage(int damage)
         {
-            _damage = damage;
+            Damage = damage;
             return this;
         }
 
@@ -63,17 +65,6 @@ namespace SmileProject.SpaceInvader.Gameplay
         {
             Owner = owner;
             _ownerTag = owner.tag;
-            return this;
-        }
-
-        /// <summary>
-        /// Set bullet position in world space
-        /// </summary>
-        /// <param name="position">world position</param>
-        /// <returns>Bullet</returns>
-        public Bullet SetPosition(Vector2 position)
-        {
-            transform.position = position;
             return this;
         }
 
@@ -119,10 +110,10 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         private void Destroy()
         {
-            Destroy(this.gameObject);
+            ReturnToPool();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected override void OnTriggerEnter2D(Collider2D other)
         {
             if (other.tag != _ownerTag)
             {

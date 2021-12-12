@@ -22,10 +22,16 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         public event Action<Spaceship> Destroyed;
 
+        private const string IdleAnimStateName = "Idle";
+        private const string GetHitAnimStateName = "GetHit";
+
         public int HP { get; private set; }
 
         [SerializeField]
         protected Transform _attackPointTransform;
+
+        [SerializeField]
+        protected Animator _animator;
 
         protected SpaceshipGun _weapon;
         protected AudioManager _audioManager;
@@ -70,9 +76,12 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <param name="attacker">attacker spaceship reference</param>
         public virtual void GetHit(int damage, Spaceship attacker)
         {
+            Debug.Log("Got hit!!");
             int result = HP - damage;
             HP = Mathf.Clamp(result, 0, HP);
             GotHit?.Invoke(attacker, this);
+            Debug.Log("Play get hit animation");
+            PlayGetHitAnimation();
 
             if (IsDead())
             {
@@ -120,21 +129,46 @@ namespace SmileProject.SpaceInvader.Gameplay
         }
 
         #region Pooling
-        // TODO: implement
         public override void OnSpawn()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void OnDespawn()
         {
-            throw new System.NotImplementedException();
+            SetSprite(null);
+            _weapon = null;
         }
         #endregion
 
         protected virtual void Destroy()
         {
             Destroyed?.Invoke(this);
+            var _ = PlaySound(_destroyedSound);
+        }
+
+        protected override void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == Tags.Bullet)
+            {
+                Bullet bullet = other.GetComponent<Bullet>();
+                GetHit(bullet.Damage, bullet.Owner);
+            }
+        }
+
+        private void OnEnable()
+        {
+            PlayIdleAnimation();
+        }
+
+        private void PlayGetHitAnimation()
+        {
+            Debug.Log("Play get hit animation");
+            _animator.Play(GetHitAnimStateName);
+        }
+
+        private void PlayIdleAnimation()
+        {
+            _animator.Play(IdleAnimStateName);
         }
     }
 }

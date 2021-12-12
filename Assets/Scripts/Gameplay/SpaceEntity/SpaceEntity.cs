@@ -1,4 +1,6 @@
-﻿using SmileProject.Generic.Pooling;
+﻿using System.Collections;
+using System.Collections.Generic;
+using SmileProject.Generic.Pooling;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
@@ -18,7 +20,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         {
             get
             {
-                return _spriteRenderer?.bounds.size.x * _spriteRenderer?.sprite.pixelsPerUnit ?? 0;
+                return _spriteRenderer?.bounds.size.x * _spriteRenderer?.sprite?.pixelsPerUnit ?? 0;
             }
         }
 
@@ -37,17 +39,13 @@ namespace SmileProject.SpaceInvader.Gameplay
         [SerializeField]
         protected SpriteRenderer _spriteRenderer;
 
-        private Sprite[] _animateSprites = null;
+        protected IList<Sprite> _animateSprites = null;
 
         private int _currentSpriteFrame = 0;
 
         public virtual void Awake()
         {
-            if (_spriteRenderer == null)
-            {
-                Debug.Assert(_spriteRenderer != null, "Missing sprite renderer reference in space object. Should assign reference in prefab.");
-                _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            }
+            Debug.Assert(_spriteRenderer != null, "Missing sprite renderer reference in space object. Should assign reference in prefab.");
         }
 
         /// <summary>
@@ -77,14 +75,15 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <param name="sprites">array of animate sprite</param>
         /// <param name="startFrame">index of sprite</param>
         /// <returns></returns>
-        public SpaceEntity SetSprite(Sprite[] sprites, int startFrame = 0)
+        public SpaceEntity SetSprite(IList<Sprite> sprites, int startFrame = 0)
         {
-            if (startFrame > sprites.Length)
+            if (startFrame > sprites.Count)
             {
                 Debug.LogAssertion("Start frame out of length.");
                 startFrame = 0;
             }
             _spriteRenderer.sprite = sprites[startFrame];
+            _currentSpriteFrame = startFrame;
             _animateSprites = sprites;
             return this;
         }
@@ -94,15 +93,25 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         public void AnimateSprite(bool ignoreInterval = false)
         {
-            //TODO: animate interval
-            if (_animateSprites.Length > 1)
+            if (_animateSprites == null || _animateSprites.Count < 2)
             {
                 Debug.LogAssertion("Unable to animate sprite. Should have more than one sprites");
                 return;
             }
-            _currentSpriteFrame = _currentSpriteFrame++ % _animateSprites.Length;
+            _currentSpriteFrame = _currentSpriteFrame++ % _animateSprites.Count;
             Sprite currentFrameSprite = _animateSprites[_currentSpriteFrame];
             SetSprite(currentFrameSprite);
+            Debug.Log("Animate sprite");
+        }
+
+        //TODO: recheck if it's works
+        private IEnumerator AnimateSpriteCoroutine()
+        {
+            while (true)
+            {
+                AnimateSprite();
+                yield return new WaitForSeconds(0.5f);
+            }
         }
 
         /// <summary>

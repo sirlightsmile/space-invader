@@ -6,7 +6,7 @@ namespace SmileProject.SpaceInvader.Sounds
 {
     public class MixerGroup : StringEnum<MixerGroup>
     {
-        public const string MAIN_MIXER_KEY = "SoundMixer";
+        public const string MainMixerKey = "SoundMixer";
         public MixerGroup(string value) : base(value)
         {
         }
@@ -17,7 +17,7 @@ namespace SmileProject.SpaceInvader.Sounds
 
     public sealed class GameSoundKeys : SoundKeys
     {
-        private const string ASSET_PATH = "GameplaySounds/";
+        private const string AssetPath = "GameplaySounds/";
         public GameSoundKeys(string value, string assetKey, string mixerKey) : base(value, assetKey, mixerKey)
         {
         }
@@ -25,7 +25,7 @@ namespace SmileProject.SpaceInvader.Sounds
         public override string GetAssetKey()
         {
             string assetKey = base.GetAssetKey();
-            string fullPath = Path.Combine(ASSET_PATH, assetKey);
+            string fullPath = Path.Combine(AssetPath, assetKey);
             return fullPath;
         }
 
