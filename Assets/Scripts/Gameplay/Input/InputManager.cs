@@ -54,11 +54,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
 
             if (_allowAttack)
             {
-                if (UnityEngine.Input.GetButtonDown("Fire1"))
-                {
-                    InvokeAttackInput();
-                }
-                else if (UnityEngine.Input.GetButton("Fire1"))
+                if (UnityEngine.Input.GetButton("Fire1"))
                 {
                     InvokeAttackInterval();
                 }
