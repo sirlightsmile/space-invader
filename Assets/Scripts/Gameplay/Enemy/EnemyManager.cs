@@ -31,6 +31,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
 
         private EnemyFormationController _formationController;
         private List<EnemySpaceship> _enemySpaceships = new List<EnemySpaceship>();
+        private EnemySpaceship[,] _spaceshipGrid;
 
         /// <summary>
         /// Shoot chance in percent (max is 1)
@@ -68,6 +69,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             if (!IsEnemiesReady)
             {
                 return;
+
             }
 
             float currentTime = Time.time;
@@ -112,10 +114,60 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             }
         }
 
-        private void OnFormationReady()
+        private void OnFormationReady(EnemySpaceship[,] spaceshipsGrid)
         {
+            _spaceshipGrid = spaceshipsGrid;
             IsEnemiesReady = true;
             EnemyReadyStatusChanged?.Invoke(IsEnemiesReady);
+        }
+
+        /// <summary>
+        /// Get alive upper and side adjacent spaceships
+        /// </summary>
+        /// <param name="spaceship"></param>
+        /// <returns></returns>
+        private List<EnemySpaceship> GetAdjacentSpaceships(EnemySpaceship spaceship)
+        {
+            List<EnemySpaceship> adjacentFriends = new List<EnemySpaceship>();
+            int x = spaceship.GridX;
+            int y = spaceship.GridY;
+
+            Action<EnemySpaceship> AddToListIfAlive = (EnemySpaceship adjacent) =>
+            {
+                if (adjacent.IsActive && !adjacent.IsDead() && adjacent.Type == spaceship.Type)
+                {
+                    adjacentFriends.Add(spaceship);
+                }
+            };
+
+            if (y > 0)
+            {
+                var upperFriend = _spaceshipGrid[y - 1, x];
+                AddToListIfAlive(upperFriend);
+            }
+            if (x > 0)
+            {
+                var leftFriend = _spaceshipGrid[y, x - 1];
+                AddToListIfAlive(leftFriend);
+            }
+            if (x < _spaceshipGrid.GetLength(0) - 1)
+            {
+                var rightFriend = _spaceshipGrid[y, x + 1];
+                AddToListIfAlive(rightFriend);
+            }
+
+            return adjacentFriends;
+        }
+
+        private void DestroyAdjacentSpaceships(EnemySpaceship destroyedShip)
+        {
+            List<EnemySpaceship> adjacentFriends = GetAdjacentSpaceships(destroyedShip);
+            Debug.Log($"Enemy {destroyedShip.GridX},{destroyedShip.GridY} got destroyed");
+            foreach (EnemySpaceship enemy in adjacentFriends)
+            {
+                Debug.Log($"Chain destroy Enemy [{enemy.GridX},{enemy.GridY}]");
+                enemy.Destroy();
+            }
         }
 
         private void OnEnemySpaceshipAdded(Spaceship spaceship)
@@ -129,6 +181,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             spaceship.Destroyed -= OnEnemyDestroyed;
             EnemySpaceship enemy = spaceship.GetComponent<EnemySpaceship>();
             _enemySpaceships.Remove(enemy);
+            DestroyAdjacentSpaceships(enemy);
             EnemyDestroyed?.Invoke(enemy.Score);
             if (_enemySpaceships.Count == 0)
             {

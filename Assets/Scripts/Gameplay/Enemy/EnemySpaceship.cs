@@ -8,6 +8,29 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
 
         public EnemyType Type { get; private set; }
 
+        public int GridX { get; private set; }
+
+        public int GridY { get; private set; }
+
+        /// <summary>
+        /// Set grid index for reference when find adjacent spaceship
+        /// </summary>
+        /// <param name="x">index in row</param>
+        /// <param name="y">index in column</param>
+        /// <returns></returns>
+        public EnemySpaceship SetGridIndex(int x, int y)
+        {
+            GridX = x;
+            GridY = y;
+            return this;
+        }
+
+        /// <summary>
+        /// Set enemy type
+        /// Will effect when find adjacent spaceship
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public EnemySpaceship SetType(EnemyType type)
         {
             Type = type;
@@ -31,7 +54,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             base.OnTriggerEnter2D(other);
         }
 
-        protected override void Destroy()
+        public override void Destroy()
         {
             base.Destroy();
             ReturnToPool();
