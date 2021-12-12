@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SmileProject.SpaceInvader.Weapon
 {
     /// <summary>
-    /// Common laser gun. Infinity bullet.
+    /// Common spaceship gun. Infinity bullet.
     /// </summary>
     public class SpaceshipGun : Weapon<SpaceshipGunModel>
     {
@@ -35,7 +35,7 @@ namespace SmileProject.SpaceInvader.Weapon
         {
             Bullet bullet = _poolManager.GetItem<Bullet>(Model.BulletType.ToString());
             Transform attackPoint = AttackPoint.transform;
-            bullet.SetPosition(attackPoint.position).SetRotation(attackPoint.rotation).SetDamage(Damage).SetOwner(attacker);
+            bullet.SetRotation(attackPoint.rotation).SetDamage(Damage).SetOwner(attacker).SetPosition(attackPoint.position);
             bullet.SetActive(true);
             var _ = PlayAttackSound();
         }
