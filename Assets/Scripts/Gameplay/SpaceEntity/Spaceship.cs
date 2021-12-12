@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.SpaceInvader.GameData;
+using SmileProject.SpaceInvader.Sounds;
 using SmileProject.SpaceInvader.Weapon;
 using UnityEngine;
 
@@ -89,7 +90,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
             else
             {
-                var _ = PlaySound(_getHitSound);
+                var _ = SoundHelper.PlaySound(_getHitSound, _audioManager);
             }
         }
 
@@ -112,22 +113,6 @@ namespace SmileProject.SpaceInvader.Gameplay
             _destroyedSound = destroyedSound;
         }
 
-        public async Task<int> PlaySound(SoundKeys soundKey)
-        {
-            try
-            {
-                if (_audioManager != null && soundKey != null)
-                {
-                    return await _audioManager.PlaySound(soundKey);
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError(exception);
-            }
-            return -1;
-        }
-
         #region Pooling
         public override void OnSpawn()
         {
@@ -144,7 +129,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         {
             HP = 0;
             Destroyed?.Invoke(this);
-            var _ = PlaySound(_destroyedSound);
+            var _ = SoundHelper.PlaySound(_destroyedSound, _audioManager);
         }
 
         protected override void OnTriggerEnter2D(Collider2D other)

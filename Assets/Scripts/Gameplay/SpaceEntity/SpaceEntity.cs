@@ -101,17 +101,6 @@ namespace SmileProject.SpaceInvader.Gameplay
             _currentSpriteFrame = _currentSpriteFrame++ % _animateSprites.Count;
             Sprite currentFrameSprite = _animateSprites[_currentSpriteFrame];
             SetSprite(currentFrameSprite);
-            Debug.Log("Animate sprite");
-        }
-
-        //TODO: recheck if it's works
-        private IEnumerator AnimateSpriteCoroutine()
-        {
-            while (true)
-            {
-                AnimateSprite();
-                yield return new WaitForSeconds(0.5f);
-            }
         }
 
         /// <summary>

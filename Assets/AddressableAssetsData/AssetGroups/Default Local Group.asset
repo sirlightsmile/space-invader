@@ -52,6 +52,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - gameplay
+  - m_GUID: 437b17fca9d4e8846afaae991138963a
+    m_Address: ShieldPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7adbe51be6ddb7e4082582cdf01515d0, type: 2}
   m_SchemaSet:
