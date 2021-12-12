@@ -6,9 +6,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
     {
         public int Score { get; private set; }
 
-        public EnemySpaceship SetColor(Color color)
+        public EnemyType Type { get; private set; }
+
+        public EnemySpaceship SetType(EnemyType type)
         {
-            _spriteRenderer.color = color;
+            Type = type;
             return this;
         }
 
@@ -26,8 +28,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            // TODO: on trigger enter bullet
-            throw new System.NotImplementedException();
+            base.OnTriggerEnter2D(other);
         }
     }
 }

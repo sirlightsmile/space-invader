@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using SmileProject.Generic.Utilities;
 using UnityEngine;
@@ -89,7 +88,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
                 bool isShoot = random <= _randomShootChance;
                 if (isShoot)
                 {
-                    SafeInvoke.Invoke(async () => { await TriggerShootAsync(spaceship); });
+                    SafeInvoke.InvokeAsync(async () => await TriggerShootAsync(spaceship));
                 }
             }
         }
