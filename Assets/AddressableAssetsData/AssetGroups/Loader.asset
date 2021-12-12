@@ -26,7 +26,7 @@ MonoBehaviour:
     m_Address: GameplayUIManager
     m_ReadOnly: 0
     m_SerializedLabels:
-    - default
+    - gameplay
   - m_GUID: c49eafa8d73d8fa4bbdd2cd86f5195f1
     m_Address: PoolManager
     m_ReadOnly: 0
@@ -51,7 +51,12 @@ MonoBehaviour:
     m_Address: GameplayController
     m_ReadOnly: 0
     m_SerializedLabels:
-    - default
+    - gameplay
+  - m_GUID: 72536a56c94c46144a43949203c9ab80
+    m_Address: EnemyFormationController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7adbe51be6ddb7e4082582cdf01515d0, type: 2}
   m_SchemaSet:
