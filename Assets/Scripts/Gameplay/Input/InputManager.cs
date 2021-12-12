@@ -56,7 +56,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
             {
                 if (UnityEngine.Input.GetButton("Fire1"))
                 {
-                    Debug.Log("Fire!");
                     InvokeAttackInterval();
                 }
             }
