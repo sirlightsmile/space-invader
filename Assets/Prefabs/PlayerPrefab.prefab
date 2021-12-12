@@ -41,13 +41,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3492213799171678313}
-  - component: {fileID: 6899399453829682022}
-  - component: {fileID: -183935142188327621}
-  - component: {fileID: 117305663461141265}
-  - component: {fileID: 2971910795002196730}
+  - component: {fileID: 5229204335637424265}
+  - component: {fileID: 2075065022684141885}
+  - component: {fileID: 4506306043641834268}
+  - component: {fileID: 1025000331048391276}
   m_Layer: 0
-  m_Name: EnemyShip
-  m_TagString: Invader
+  m_Name: PlayerPrefab
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,15 +59,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812334156182985140}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -999, y: -999, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 5990076109882556249}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &6899399453829682022
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5229204335637424265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,13 +76,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 812334156182985140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6a952d2287aaf449baf23cb5101e81d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ecfe7ee311499d45b68b5710731069f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 657401795837474271}
   _attackPointTransform: {fileID: 755940592231839850}
-  _animator: {fileID: 2971910795002196730}
---- !u!61 &-183935142188327621
+  _animator: {fileID: 1025000331048391276}
+  _moveSpeed: 10
+--- !u!61 &2075065022684141885
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +109,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &117305663461141265
+--- !u!50 &4506306043641834268
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -129,7 +130,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &2971910795002196730
+--- !u!95 &1025000331048391276
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -139,7 +140,7 @@ Animator:
   m_GameObject: {fileID: 812334156182985140}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c34029af2be01c94f8817d7734101e58, type: 2}
+  m_Controller: {fileID: 9100000, guid: d8c3223763b377440a1af6bbc783f61c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -172,13 +173,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937234354778291833}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5990076109882556249}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &657401795837474271
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -217,13 +218,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1496277393
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.1051805, y: 0.8}
+  m_Size: {x: 0.99, y: 0.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

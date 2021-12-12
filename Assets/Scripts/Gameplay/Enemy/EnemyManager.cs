@@ -153,17 +153,22 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
 
             if (y > 0)
             {
-                EnemySpaceship upperFriend = _spaceshipGrid[y - 1, x];
+                EnemySpaceship upperFriend = _spaceshipGrid[x, y - 1];
                 AddToListIfAlive(upperFriend);
+            }
+            if (y < _spaceshipGrid.GetLength(1) - 1)
+            {
+                EnemySpaceship lowerFriend = _spaceshipGrid[x, y + 1];
+                AddToListIfAlive(lowerFriend);
             }
             if (x > 0)
             {
-                EnemySpaceship leftFriend = _spaceshipGrid[y, x - 1];
+                EnemySpaceship leftFriend = _spaceshipGrid[x - 1, y];
                 AddToListIfAlive(leftFriend);
             }
             if (x < _spaceshipGrid.GetLength(0) - 1)
             {
-                EnemySpaceship rightFriend = _spaceshipGrid[y, x + 1];
+                EnemySpaceship rightFriend = _spaceshipGrid[x + 1, y];
                 AddToListIfAlive(rightFriend);
             }
 

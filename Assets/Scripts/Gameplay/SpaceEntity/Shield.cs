@@ -8,11 +8,15 @@ namespace SmileProject.SpaceInvader.Gameplay
     public class Shield : SpaceEntity
     {
         public event Action<Shield> Destroyed;
-        public int Durability { get { return _durability; } }
 
-        [SerializeField]
+        /// <summary>
+        /// Durability ratio which shield will change to broken sprite
+        /// Currently, set to 3 mean when durability reach to 1/3 sprite will change
+        /// </summary>
+        private const float BrokenRatio = 3;
+
         private int _durability = 5;
-
+        private int _brokenDurability;
         private AudioManager _audioManager;
         private SoundKeys _getHitSound, _destroyedSound;
 
@@ -25,6 +29,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         public Shield SetDurability(int durability)
         {
             _durability = durability;
+            _brokenDurability = Mathf.CeilToInt(durability / BrokenRatio);
             return this;
         }
 
@@ -63,9 +68,11 @@ namespace SmileProject.SpaceInvader.Gameplay
             else
             {
                 var _ = SoundHelper.PlaySound(_getHitSound, _audioManager);
-                if (_durability < 3)
+                if (_durability == _brokenDurability)
                 {
+                    // when durability reach 1/3. change sprite
                     AnimateSprite();
+                    SetSpriteFlipX(!_spriteRenderer.flipX);
                 }
             }
         }

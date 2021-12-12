@@ -1,31 +1,22 @@
 fileFormatVersion: 2
-guid: f7b0c8993a054b241bf6e749bbb6df64
+guid: 7a7a7017dd833484993f20462676bb49
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4334783836991956000
-    second: player_0
+      213: -8868272330977153355
+    second: PlayerSprite_0
   - first:
-      213: 7388399842426930641
-    second: player_1
+      213: 6349069617109316163
+    second: PlayerSprite_1
   - first:
-      213: -540375121143967267
-    second: player_7
+      213: 1569261468809307932
+    second: PlayerSprite_2
   - first:
-      213: -3861952770410913445
-    second: player_10
+      213: 8916896056068427944
+    second: PlayerSprite_3
   - first:
-      213: 5044450397378941176
-    second: player_11
-  - first:
-      213: -480808811739928509
-    second: player_15
-  - first:
-      213: 6757282713640645180
-    second: player_2
-  - first:
-      213: -6781412095145881161
-    second: player_3
+      213: -8434965753784240484
+    second: PlayerSprite_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -69,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 80
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -85,7 +76,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -97,7 +88,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,7 +100,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -123,13 +114,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_0
+      name: PlayerSprite_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 6
-        width: 89
-        height: 64
+        x: 7
+        y: 12
+        width: 73
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,50 +128,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 024a20edeee382c30800000000000000
-      internalID: 4334783836991956000
+      spriteID: 5be6ea41d419de480800000000000000
+      internalID: -8868272330977153355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_1
+      name: PlayerSprite_1
       rect:
         serializedVersion: 2
         x: 98
-        y: 7
-        width: 105
-        height: 61
+        y: 6
+        width: 106
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d5c862e28ed88660800000000000000
-      internalID: 7388399842426930641
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_2
-      rect:
-        serializedVersion: 2
-        x: 216
-        y: 12
-        width: 96
-        height: 58
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c32307193d0b6cd50800000000000000
-      internalID: 6757282713640645180
+      spriteID: 342b60e8d2d6c1850800000000000000
+      internalID: 6349069617109316163
       vertices: []
       indices: 
       edges: []

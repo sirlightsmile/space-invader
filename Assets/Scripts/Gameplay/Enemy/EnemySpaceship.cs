@@ -1,9 +1,13 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
 {
     public class EnemySpaceship : Spaceship
     {
+        private int DestroyAnimationDelayMS = 300;
+
         public int Score { get; private set; }
 
         public EnemyType Type { get; private set; }
@@ -11,6 +15,9 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         public int GridX { get; private set; }
 
         public int GridY { get; private set; }
+
+        [SerializeField]
+        private Collider2D _collider;
 
         /// <summary>
         /// Set grid index for reference when find adjacent spaceship
@@ -49,15 +56,43 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             return this;
         }
 
-        protected override void OnTriggerEnter2D(Collider2D other)
-        {
-            base.OnTriggerEnter2D(other);
-        }
-
         public override void Destroy()
         {
             base.Destroy();
-            ReturnToPool();
+            StopAnimateSprite();
+            var _ = PlayDestroyAnimation();
+        }
+
+        private async Task PlayDestroyAnimation()
+        {
+            try
+            {
+                if (_animateSprites != null && _animateSprites.Count > 0)
+                {
+                    _collider.enabled = false;
+                    Sprite lastSprite = _animateSprites[_animateSprites.Count - 1];
+                    SetSprite(lastSprite);
+                    await Task.Delay(DestroyAnimationDelayMS);
+                }
+                ReturnToPool();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
+        }
+
+
+        #region Pooling
+        public override void OnSpawn()
+        {
+            _collider.enabled = true;
+        }
+        #endregion
+
+        protected override void OnTriggerEnter2D(Collider2D other)
+        {
+            base.OnTriggerEnter2D(other);
         }
     }
 }

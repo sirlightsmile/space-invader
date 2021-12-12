@@ -39,9 +39,11 @@ namespace SmileProject.SpaceInvader.Gameplay
         [SerializeField]
         protected SpriteRenderer _spriteRenderer;
 
-        protected IList<Sprite> _animateSprites = null;
+        [SerializeField]
+        protected List<Sprite> _animateSprites;
 
         private int _currentSpriteFrame = 0;
+        private Coroutine _animateSpriteCoroutine = null;
 
         public virtual void Awake()
         {
@@ -84,23 +86,48 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
             _spriteRenderer.sprite = sprites[startFrame];
             _currentSpriteFrame = startFrame;
-            _animateSprites = sprites;
+            _animateSprites = new List<Sprite>(sprites);
+            Debug.Log("Set animate sprite length : " + _animateSprites.Count);
             return this;
         }
 
         /// <summary>
-        /// Animate sprite to next frame
+        /// Animate sprite to next sprite frame
         /// </summary>
-        public void AnimateSprite(bool ignoreInterval = false)
+        public void AnimateSprite(int? frameCount = null)
         {
-            if (_animateSprites == null || _animateSprites.Count < 2)
+            if (_animateSprites == null || _animateSprites.Count < 1)
             {
                 Debug.LogAssertion("Unable to animate sprite. Should have more than one sprites");
                 return;
             }
-            _currentSpriteFrame = _currentSpriteFrame++ % _animateSprites.Count;
+            int spritesCount = frameCount.HasValue ? frameCount.Value : _animateSprites.Count;
+            _currentSpriteFrame = ++_currentSpriteFrame % spritesCount;
             Sprite currentFrameSprite = _animateSprites[_currentSpriteFrame];
             SetSprite(currentFrameSprite);
+        }
+
+        public void AnimateSpriteLoop(float interval, int? frameCount = null)
+        {
+            _animateSpriteCoroutine = StartCoroutine(AnimateSpriteCoroutine(interval, frameCount));
+        }
+
+        public void StopAnimateSprite()
+        {
+            if (_animateSpriteCoroutine != null)
+            {
+                StopCoroutine(_animateSpriteCoroutine);
+                _animateSpriteCoroutine = null;
+            }
+        }
+
+        private IEnumerator AnimateSpriteCoroutine(float animateInterval, int? frameCount = null)
+        {
+            while (IsActive)
+            {
+                AnimateSprite(frameCount);
+                yield return new WaitForSeconds(animateInterval);
+            }
         }
 
         /// <summary>

@@ -15,6 +15,16 @@ namespace SmileProject.SpaceInvader.Gameplay
     {
         private const string PrefabKey = "EnemyPrefab";
 
+        /// <summary>
+        /// Idle sprite animate interval
+        /// </summary>
+        private const float AnimateInterval = 0.5f;
+
+        /// <summary>
+        /// Sprite frame count for enemy idle animation
+        /// </summary>
+        private const int IdleFrameCount = 2;
+
         public EnemySpaceshipBuilder(IResourceLoader resourceLoader, GameDataManager gameDataManager, WeaponFactory weaponFactory, AudioManager audioManager) : base(resourceLoader, gameDataManager, weaponFactory, audioManager) { }
 
         public async Task SetupSpaceshipPool(PoolManager poolManager, int size)
@@ -31,9 +41,9 @@ namespace SmileProject.SpaceInvader.Gameplay
                 SpaceshipGun weapon = _weaponFactory.CreateSpaceshipGunById(weaponId);
                 await spaceship.SetWeapon(weapon);
             }
-            spaceship.SetScore(model.Score);
-            spaceship.SetType(model.Type);
+            spaceship.SetScore(model.Score).SetType(model.Type);
             spaceship.SetSounds(_audioManager, GameSoundKeys.Hit, GameSoundKeys.Explosion);
+            spaceship.AnimateSpriteLoop(AnimateInterval, IdleFrameCount);
             return spaceship;
         }
 

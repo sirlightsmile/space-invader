@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 977609968206091613}
-  _durability: 5
+  _animateSprites:
+  - {fileID: 2389193319765324094, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
+  - {fileID: 1691966074973790518, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
 --- !u!212 &977609968206091613
 SpriteRenderer:
   m_ObjectHideFlags: 0

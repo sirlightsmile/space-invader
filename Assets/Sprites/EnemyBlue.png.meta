@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: 899753f64df9e794eb6ca42f6cb51332
+guid: 294148478924ac94ba961d5a707c6342
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 297761703447499198
-    second: enemy_0
+      213: 968011450282801046
+    second: EnemyBlue_0
   - first:
-      213: 3680619090928529440
-    second: enemy_1
+      213: -1612753994492432078
+    second: EnemyBlue_1
+  - first:
+      213: 8595901204166014776
+    second: EnemyBlue_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -67,7 +70,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -79,7 +82,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -91,7 +94,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -105,7 +108,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: enemy_0
+      name: EnemyBlue_0
       rect:
         serializedVersion: 2
         x: 10
@@ -119,14 +122,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb114b111bcd12400800000000000000
-      internalID: 297761703447499198
+      spriteID: 697fd9809411f6d00800000000000000
+      internalID: 968011450282801046
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemy_1
+      name: EnemyBlue_1
       rect:
         serializedVersion: 2
         x: 156
@@ -140,8 +143,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 020f05cff8f241330800000000000000
-      internalID: 3680619090928529440
+      spriteID: 231bf2869c85e99e0800000000000000
+      internalID: -1612753994492432078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyBlue_2
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 14
+        width: 105
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837faa62a96ca4770800000000000000
+      internalID: 8595901204166014776
       vertices: []
       indices: 
       edges: []

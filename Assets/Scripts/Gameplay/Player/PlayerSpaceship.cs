@@ -43,7 +43,8 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         public override void Destroy()
         {
             base.Destroy();
-            Destroy(this.gameObject);
+            AnimateSprite();
+            Destroy(this.gameObject, 0.5f);
         }
 
         protected override void OnTriggerEnter2D(Collider2D other)

@@ -66,7 +66,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             Debug.Log("Spawn Enemies");
             _rowContainers = new Transform[_columns];
             Vector2 startPos = Vector2.zero;
-            EnemySpaceship[,] spaceshipGrid = new EnemySpaceship[_columns, _rows];
+            EnemySpaceship[,] spaceshipGrid = new EnemySpaceship[_rows, _columns];
             for (int y = _columns - 1; y >= 0; y--)
             {
                 Transform currentRow = CreateRowContainer();
@@ -77,7 +77,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
                     enemy.transform.SetParent(currentRow);
                     enemy.transform.localPosition = new Vector2(startPos.x + (x * _xInterval), -(startPos.y + (y * _yInterval)));
                     enemy.SetGridIndex(x, y);
-                    spaceshipGrid[y, x] = enemy;
+                    spaceshipGrid[x, y] = enemy;
                 }
                 StartCoroutine(MoveEnemyRowSide(currentRow));
                 await Task.Delay(_spawnInterval);
