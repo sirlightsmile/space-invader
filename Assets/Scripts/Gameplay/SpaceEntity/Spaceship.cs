@@ -140,8 +140,9 @@ namespace SmileProject.SpaceInvader.Gameplay
         }
         #endregion
 
-        protected virtual void Destroy()
+        public virtual void Destroy()
         {
+            HP = 0;
             Destroyed?.Invoke(this);
             var _ = PlaySound(_destroyedSound);
         }
