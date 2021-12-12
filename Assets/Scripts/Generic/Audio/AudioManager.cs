@@ -12,7 +12,7 @@ namespace SmileProject.Generic.Audio
     public class AudioManager : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _audioSourcesContainer;
+        private Transform _audioSourcesContainer;
 
         [SerializeField]
         private List<AudioSource> _audioSources;
@@ -105,7 +105,9 @@ namespace SmileProject.Generic.Audio
             AudioSource audioSource = _audioSources.Find(item => !item.isPlaying);
             if (audioSource == null)
             {
-                audioSource = _audioSourcesContainer.AddComponent<AudioSource>();
+                GameObject audioSourceObj = new GameObject("AudioSource");
+                audioSource = audioSourceObj.AddComponent<AudioSource>();
+                audioSourceObj.transform.SetParent(_audioSourcesContainer);
                 audioSource.playOnAwake = false;
                 _audioSources.Add(audioSource);
             }
