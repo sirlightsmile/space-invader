@@ -24,7 +24,6 @@ namespace SmileProject.SpaceInvader
         private GameDataManager _gameDataManager;
         private GameStateManager _gameStateManager;
         private AddressableResourceLoader _resourceLoader;
-        private GameController _gameController;
         private GameplayController _gameplayController;
         private PoolManager _poolManager;
         private AudioManager _audioManager;
@@ -79,8 +78,6 @@ namespace SmileProject.SpaceInvader
             // inject enemy manager
             EnemySpaceshipBuilder enemiesBuilder = new EnemySpaceshipBuilder(resourceLoader, gameDataManager, weaponFactory, audioManager);
             enemyFormationController.Initialize(enemiesBuilder, gameDataManager);
-
-            // enemyFormationController.Initialize(gameDataManager, enemiesBuilder);
             EnemyManager enemyManager = new EnemyManager(enemyFormationController);
 
             await Task.WhenAll
