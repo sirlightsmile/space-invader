@@ -152,7 +152,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             if (other.tag == Tags.Bullet)
             {
                 Bullet bullet = other.GetComponent<Bullet>();
-                if (bullet != null && bullet.Owner.tag != transform.tag)
+                if (bullet != null && bullet.Owner?.tag != transform.tag)
                 {
                     GetHit(bullet.Damage, bullet.Owner);
                 }
