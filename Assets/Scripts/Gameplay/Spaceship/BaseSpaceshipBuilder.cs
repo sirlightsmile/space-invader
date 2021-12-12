@@ -1,19 +1,19 @@
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.Generic.Pooling;
 using SmileProject.Generic.ResourceManagement;
 using SmileProject.SpaceInvader.GameData;
 using SmileProject.SpaceInvader.Weapon;
+using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
     public abstract class BaseSpaceshipBuilder
     {
         public event Action<Spaceship> SpaceshipBuilded;
-
-        protected const string ASSET_PREFIX = "SpaceshipSprites/";
 
         private IResourceLoader _resourceLoader;
         private PoolManager _poolManager;
@@ -54,13 +54,6 @@ namespace SmileProject.SpaceInvader.Gameplay
         }
 
         /// <summary>
-        /// Build spaceship from id. If pool manager has assigned this will build from pool
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public abstract Task<Spaceship> BuildSpaceshipById(string id);
-
-        /// <summary>
         /// Build spaceship from model. If pool manager has assigned this will build from pool
         /// </summary>
         /// <param name="templateKey">asset name</param>
@@ -82,7 +75,8 @@ namespace SmileProject.SpaceInvader.Gameplay
             spaceship.Setup(model);
             spaceship.SetActive(true);
             string spriteName = GetAssetPrefix() + model.AssetName;
-            await _resourceLoader.SetSpriteAsync(spriteName, spaceship.SetSprite);
+            var sprites = await _resourceLoader.Load<IList<Sprite>>(spriteName);
+            spaceship.SetSprite(sprites);
             SpaceshipBuilded?.Invoke(spaceship);
             return spaceship;
         }

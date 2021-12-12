@@ -12,33 +12,25 @@ namespace SmileProject.SpaceInvader.Gameplay
 {
     public class PlayerSpaceshipBuilder : BaseSpaceshipBuilder
     {
-        private const string PREFAB_KEY = "PlayerPrefab";
+        private const string PrefabKey = "PlayerPrefab";
 
         public PlayerSpaceshipBuilder(IResourceLoader resourceLoader, GameDataManager gameDataManager, WeaponFactory weaponFactory, AudioManager audioManager) : base(resourceLoader, gameDataManager, weaponFactory, audioManager) { }
 
-        public async Task<PlayerSpaceship> BuildPlayerSpaceship(SpaceshipModel model)
+        public async Task<PlayerSpaceship> BuildPlayerSpaceship(PlayerSpaceshipModel model)
         {
-            var spaceship = await BuildSpaceship<PlayerSpaceship, SpaceshipModel>(PREFAB_KEY, model);
+            var spaceship = await BuildSpaceship<PlayerSpaceship, PlayerSpaceshipModel>(PrefabKey, model);
             string weaponId = model.BasicWeaponId;
             SpaceshipGun weapon = !String.IsNullOrEmpty(weaponId) ? _weaponFactory.CreateSpaceshipGunById(weaponId) : _weaponFactory.CreateRandomSpaceshipGun();
             await spaceship.SetWeapon(weapon);
-            spaceship.SetBorder();
             spaceship.SetSounds(_audioManager, GameSoundKeys.Impact, GameSoundKeys.PlayerExplosion);
+            spaceship.SetBorder();
             return spaceship;
         }
 
-        public async override Task<Spaceship> BuildSpaceshipById(string id)
+        public async Task<PlayerSpaceship> BuildSpaceshipById(string id)
         {
-            SpaceshipModel model = _gameDataManager.GetPlayerSpaceshipModelById(id);
+            PlayerSpaceshipModel model = _gameDataManager.GetPlayerSpaceshipModelById(id);
             return await BuildPlayerSpaceship(model);
-        }
-
-        public async Task<PlayerSpaceship> BuildRandomSpaceship()
-        {
-            SpaceshipModel[] models = _gameDataManager.GetPlayerSpaceshipModels();
-            int randomIndex = UnityEngine.Random.Range(0, models.Length);
-            SpaceshipModel randomModel = models[randomIndex];
-            return await BuildPlayerSpaceship(randomModel);
         }
     }
 }
