@@ -24,7 +24,7 @@ namespace SmileProject.Generic.Utilities
         }
 
         /// <summary>
-        /// Invoke specific async function without any returning result
+        /// Invoke specific async function without any returning result or await
         /// any exception will log to error tracker without crashing the game
         /// </summary>
         /// <param name="function"></param>
