@@ -22,7 +22,7 @@ namespace SmileProject.SpaceInvader.Weapon
         public SpaceshipGun CreateSpaceshipGun(SpaceshipGunModel model)
         {
             SpaceshipGun gun = new SpaceshipGun(model, _poolManager);
-            gun.SetSounds(_audioManager, GameSoundKeys.Shoot);
+            gun.SetSound(_audioManager, GameSoundKeys.Shoot);
             return gun;
         }
 

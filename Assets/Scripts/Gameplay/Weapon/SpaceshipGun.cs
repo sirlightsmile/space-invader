@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.Generic.Pooling;
+using SmileProject.Generic.Utilities;
 using SmileProject.SpaceInvader.GameData;
 using SmileProject.SpaceInvader.Gameplay;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace SmileProject.SpaceInvader.Weapon
             Transform attackPoint = AttackPoint.transform;
             bullet.SetRotation(attackPoint.rotation).SetDamage(Damage).SetOwner(attacker).SetPosition(attackPoint.position);
             bullet.SetActive(true);
-            var _ = PlayAttackSound();
+            SafeInvoke.InvokeAsync(async () => { await PlayAttackSound(); });
         }
 
         private async Task Reload()
@@ -56,12 +57,6 @@ namespace SmileProject.SpaceInvader.Weapon
                 };
                 await _poolManager.CreatePool<Bullet>(options);
             }
-        }
-
-        public void SetSounds(AudioManager audioManager, SoundKeys shootSound)
-        {
-            _audioManager = audioManager;
-            _shootSound = shootSound;
         }
     }
 }

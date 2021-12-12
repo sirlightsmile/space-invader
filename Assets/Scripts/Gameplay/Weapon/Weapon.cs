@@ -8,7 +8,7 @@ namespace SmileProject.SpaceInvader.Weapon
 {
     public abstract class Weapon<T> where T : WeaponModel
     {
-        private const int WEAPON_INITIAL_LEVEL = 1;
+        private const int WeaponInitialLevel = 1;
         protected Transform AttackPoint { get { return _attackPointTransform; } }
         protected T Model { get { return _model; } }
         protected int Damage { get { return _damage; } }
@@ -28,7 +28,7 @@ namespace SmileProject.SpaceInvader.Weapon
         public Weapon(T model)
         {
             _model = model;
-            _level = WEAPON_INITIAL_LEVEL;
+            _level = WeaponInitialLevel;
             _maxLevel = model.MaxLevel;
             _damage = model.BaseDamage;
             _attackSpeed = model.BaseSpeed;
@@ -82,7 +82,6 @@ namespace SmileProject.SpaceInvader.Weapon
 
         protected async Task PlayAttackSound()
         {
-            // TODO: consider safe invoke sound
             if (_audioManager != null)
             {
                 await _audioManager.PlaySound(_attackSound);
