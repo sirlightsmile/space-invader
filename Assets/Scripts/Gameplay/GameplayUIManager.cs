@@ -35,9 +35,9 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
             _gameEndComp.Show($"Clear!\nYour score : {score}");
         }
 
-        public void ShowGameOver()
+        public void ShowGameOver(int score)
         {
-            _gameEndComp.Show("Game Over");
+            _gameEndComp.Show($"Game Over\nYour score : {score}");
         }
 
         public void ShowWaveChange(int waveNumber, int showTime)

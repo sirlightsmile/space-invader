@@ -36,7 +36,7 @@ namespace SmileProject.SpaceInvader.Weapon
         {
             Bullet bullet = _poolManager.GetItem<Bullet>(Model.BulletType.ToString());
             Transform attackPoint = AttackPoint.transform;
-            bullet.SetRotation(attackPoint.rotation).SetDamage(Damage).SetOwner(attacker).SetPosition(attackPoint.position);
+            bullet.SetRotation(attackPoint.rotation).SetDamage(Damage).SetSpeed(AttackSpeed).SetOwner(attacker).SetPosition(attackPoint.position);
             bullet.SetActive(true);
             SafeInvoke.InvokeAsync(async () => { await PlayAttackSound(); });
         }
@@ -48,7 +48,6 @@ namespace SmileProject.SpaceInvader.Weapon
             {
                 PoolOptions options = new PoolOptions
                 {
-                    //TODO: adjust size
                     AssetKey = Model.BulletAsset,
                     PoolName = poolName,
                     InitialSize = 10,

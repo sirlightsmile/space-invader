@@ -20,7 +20,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             _audioManager = audioManager;
         }
 
-        public async Task PlaceShields()
+        public async Task PlaceShields(int durability)
         {
             int screenIntervalX = Screen.width / TotalShield;
             List<Task> tasks = new List<Task>();
@@ -28,19 +28,13 @@ namespace SmileProject.SpaceInvader.Gameplay
             {
                 bool isFlip = i % 2 == 0;
                 int intervalIndex = isFlip ? i + 1 : i;
-                tasks.Add(PlaceShield(screenIntervalX * intervalIndex, isFlip));
+                tasks.Add(PlaceShield(screenIntervalX * intervalIndex, isFlip, durability));
             }
             await Task.WhenAll(tasks);
         }
 
-        /// <summary>
-        /// Place pair of shield at target position
-        /// </summary>
-        /// <param name="screenPosX"></param>
-        /// <returns></returns>
-        private async Task PlaceShield(float screenPosX, bool isFlip)
+        private async Task PlaceShield(float screenPosX, bool isFlip, int durability)
         {
-            Debug.Log("screenPosX" + screenPosX);
             Shield shield = await _resourceLoader.InstantiateAsync<Shield>(PrefabKey);
             float targetScreenX = isFlip ? screenPosX - (shield.Width / 2) : screenPosX + (shield.Width / 2);
             float posX = Camera.main.ScreenToWorldPoint(new Vector2(targetScreenX, 0)).x;

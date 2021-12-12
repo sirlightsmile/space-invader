@@ -12,6 +12,7 @@ namespace SmileProject.SpaceInvader.Weapon
         protected Transform AttackPoint { get { return _attackPointTransform; } }
         protected T Model { get { return _model; } }
         protected int Damage { get { return _damage; } }
+        protected float AttackSpeed { get { return _attackSpeed; } }
 
         private int _level;
         private int _maxLevel;

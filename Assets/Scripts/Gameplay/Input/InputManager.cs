@@ -17,9 +17,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
         private bool _allowInput = true;
         private bool _allowAttack = true;
 
-        private float _invokeAttackInterval = 0.3f;
-        private float _attackTimestamp = 0;
-
         /// <summary>
         /// Set permission for every input.
         /// </summary>
@@ -56,7 +53,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
             {
                 if (UnityEngine.Input.GetButton("Fire1"))
                 {
-                    InvokeAttackInterval();
+                    AttackInput?.Invoke();
                 }
             }
 
@@ -69,20 +66,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
             {
                 ConfirmInput?.Invoke();
             }
-        }
-
-        private void InvokeAttackInterval()
-        {
-            if (Time.time - _attackTimestamp > _invokeAttackInterval)
-            {
-                InvokeAttackInput();
-            }
-        }
-
-        private void InvokeAttackInput()
-        {
-            _attackTimestamp = Time.time;
-            AttackInput?.Invoke();
         }
     }
 }

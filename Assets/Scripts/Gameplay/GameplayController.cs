@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
 using SmileProject.Generic.Utilities;
+using SmileProject.SpaceInvader.Config;
 using SmileProject.SpaceInvader.Gameplay.Enemy;
 using SmileProject.SpaceInvader.Gameplay.Input;
 using SmileProject.SpaceInvader.Gameplay.Player;
@@ -61,13 +62,14 @@ namespace SmileProject.SpaceInvader.Gameplay
         private AudioManager _audioManager;
         private GameplayUIManager _uiManager;
 
+        private int _extraBonusScore = 0;
         private int _currentWave, _waveCount = 0;
         private bool _isGameEnded, _isGameStarted = false;
 
         /// <summary>
         /// Initialize gameplay controller
         /// </summary>
-        public async Task Initialize(PlayerController playerController, EnemyManager enemyManager, InputManager inputManager, AudioManager audioManager, GameplayUIManager uiManager)
+        public async Task Initialize(PlayerController playerController, EnemyManager enemyManager, InputManager inputManager, AudioManager audioManager, GameplayUIManager uiManager, ShieldPlacer shieldPlacer, GameConfig gameConfig)
         {
             _playerController = playerController;
             _inputManager = inputManager;
@@ -84,8 +86,17 @@ namespace SmileProject.SpaceInvader.Gameplay
             enemyManager.AllSpaceshipDestroyed += OnWaveClear;
             enemyManager.EnemyReadyStatusChanged += OnEnemyReadyStatusChanged;
 
-            await playerController.CreatePlayer(_playerSpawnPoint);
+            ApplyConfig(gameConfig);
+            await Task.WhenAll(new Task[] { shieldPlacer.PlaceShields(gameConfig.ShieldDurability), playerController.CreatePlayer(_playerSpawnPoint) });
             uiManager.SetPlayerHp(playerController.PlayerSpaceship.HP);
+        }
+
+        public void ApplyConfig(GameConfig gameConfig)
+        {
+            _playerController.ApplyPlayerConfig(gameConfig.PlayerConfig);
+            _enemyManager.ApplyEnemyConfig(gameConfig.EnemyConfig);
+            _extraBonusScore = gameConfig.ExtraBonusScore;
+            TotalTime = gameConfig.TotalTime;
         }
 
         public void StandBy()
@@ -145,8 +156,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         private void GameOver()
         {
             GameEnd();
-            // TODO: show game clear too
-            _uiManager.ShowGameOver();
+            _uiManager.ShowGameOver(_playerController.TotalScore);
             SafeInvoke.InvokeAsync(async () => await _audioManager.PlaySound(GameSoundKeys.Failed));
         }
 
@@ -159,7 +169,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         private void PlayGameplayBGM()
         {
-            SafeInvoke.InvokeAsync(async () => await _audioManager.PlaySound(GameSoundKeys.GameplayBGM, true));
+            var _ = SoundHelper.PlaySound(GameSoundKeys.GameplayBGM, _audioManager, true);
         }
 
         private void OnEnemyDestroyed(int score)
@@ -208,7 +218,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         private void CalculateExtraScore()
         {
             float scoreRatio = Timer / TotalTime;
-            // TODO: Config later
+            // TODO: Config time bonus
             int timeBonus = 10;
             int timerScore = Mathf.FloorToInt(timeBonus * scoreRatio);
             _playerController.SetTimerScore(timerScore);

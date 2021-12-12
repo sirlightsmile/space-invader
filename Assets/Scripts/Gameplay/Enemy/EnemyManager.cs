@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SmileProject.Generic.Utilities;
+using SmileProject.SpaceInvader.Config;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
@@ -32,16 +33,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         private EnemyFormationController _formationController;
         private List<EnemySpaceship> _enemySpaceships = new List<EnemySpaceship>();
         private EnemySpaceship[,] _spaceshipGrid;
+        private EnemyConfig _config;
 
         /// <summary>
-        /// Shoot chance in percent (max is 1)
+        /// Rate that enemy will shoot in percent (max is 1f)
         /// </summary>
         private float _randomShootChance = 0.1f;
-
-        /// <summary>
-        /// Reference of time that trigger spaceships shoot
-        /// </summary>
-        private float _lastShootTimestamp = 0;
 
         /// <summary>
         /// Time interval for trigger spaceships shoot (seconds)
@@ -53,11 +50,25 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         /// </summary>
         private float _shootAsyncInterval = 3f;
 
+        /// <summary>
+        /// Reference of time that trigger spaceships shoot
+        /// </summary>
+        private float _lastShootTimestamp = 0;
+
         public EnemyManager(EnemyFormationController formationController)
         {
             _formationController = formationController;
             formationController.SpaceshipAdded += OnEnemySpaceshipAdded;
             formationController.FormationReady += OnFormationReady;
+        }
+
+        public void ApplyEnemyConfig(EnemyConfig config)
+        {
+            _config = config;
+            _randomShootChance = _config.RandomShootChance;
+            _triggerShootInterval = _config.TriggerShootInterval;
+            _shootAsyncInterval = _config.ShootAsyncInterval;
+            _formationController.SetMoveSpeed(_config.MovementSpeed);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using SmileProject.SpaceInvader.Config;
 using SmileProject.SpaceInvader.Constant;
 using SmileProject.SpaceInvader.Gameplay.Input;
 using UnityEngine;
@@ -22,18 +23,31 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         public int KillScore { get; private set; } = 0;
         public PlayerSpaceship PlayerSpaceship { get; private set; }
         private PlayerSpaceshipBuilder _builder;
+        private PlayerConfig _config;
+        private float _invokeAttackInterval = 0.3f;
+        private float _attackTimestamp = 0;
 
         public PlayerController(ISpaceShooterInput inputManager, PlayerSpaceshipBuilder builder)
         {
             _builder = builder;
-            inputManager.AttackInput += PlayerShoot;
+            inputManager.AttackInput += InvokeAttackInterval;
             inputManager.HorizontalInput += PlayerMove;
+        }
+
+        public void ApplyPlayerConfig(PlayerConfig config)
+        {
+            _config = config;
+            SetFireRatePerSecond(config.PlayerFireRate);
+        }
+
+        private void SetFireRatePerSecond(int fireRate)
+        {
+            _invokeAttackInterval = 1f / fireRate;
         }
 
         public async Task<PlayerSpaceship> CreatePlayer(Vector2 spawnPoint)
         {
-            //TODO: config player spaceship id
-            PlayerSpaceship player = await _builder.BuildSpaceshipById("ps01");
+            PlayerSpaceship player = await _builder.BuildSpaceshipById(_config.PlayerSpaceshipID);
             player.SetPosition(spawnPoint);
             SetPlayer(player);
             return player;
@@ -56,10 +70,19 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
             player.Destroyed += OnPlayerDestroyed;
         }
 
+        private void InvokeAttackInterval()
+        {
+            if (Time.time - _attackTimestamp > _invokeAttackInterval)
+            {
+                PlayerShoot();
+            }
+        }
+
         private void PlayerShoot()
         {
             if (PlayerSpaceship != null && PlayerSpaceship.IsActive)
             {
+                _attackTimestamp = Time.time;
                 PlayerSpaceship.Shoot();
             }
         }

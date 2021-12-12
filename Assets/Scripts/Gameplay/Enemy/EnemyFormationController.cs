@@ -43,13 +43,10 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         [SerializeField]
         private int _spawnInterval = 200;
 
-        [Header("Movement")]
-        [SerializeField]
-        private float _moveSpeed = 0.5f;
-
         [SerializeField]
         private float _xBorder = 0.5f;
 
+        private float _moveSpeed = 0.5f;
         private Transform[] _rowContainers;
         private EnemySpaceshipBuilder _enemyBuilder;
 
@@ -57,6 +54,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         {
             _enemyBuilder = enemyBuilder;
             _enemyBuilder.SpaceshipBuilded += OnSpaceshipBuilded;
+        }
+
+        public void SetMoveSpeed(float speed)
+        {
+            _moveSpeed = speed;
         }
 
         public async Task SpawnEnemies()

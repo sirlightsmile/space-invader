@@ -40,6 +40,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
             _moveBorder = borderWorldPoint;
         }
 
+        public override void Destroy()
+        {
+            base.Destroy();
+            Destroy(this.gameObject);
+        }
+
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             base.OnTriggerEnter2D(other);

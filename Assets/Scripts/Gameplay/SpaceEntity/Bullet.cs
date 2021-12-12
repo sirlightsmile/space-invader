@@ -22,8 +22,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         public int Damage { get; private set; } = 1;
 
-        // TODO: make config for these
-        private float _bulletSpeed = 5f;
+        private float _bulletSpeed;
         private float _yBorder;
         private Spaceship _owner;
 
@@ -53,6 +52,17 @@ namespace SmileProject.SpaceInvader.Gameplay
         public Bullet SetDamage(int damage)
         {
             Damage = damage;
+            return this;
+        }
+
+        /// <summary>
+        /// Set bullet owner
+        /// </summary>
+        /// <param name="owner">owner</param>
+        /// <returns>Bullet</returns>
+        public Bullet SetSpeed(float speed)
+        {
+            _bulletSpeed = speed;
             return this;
         }
 
