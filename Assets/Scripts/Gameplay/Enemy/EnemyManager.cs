@@ -36,7 +36,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         /// <summary>
         /// Shoot chance in percent (max is 1)
         /// </summary>
-        private float _randomShootChance = 0.2f;
+        private float _randomShootChance = 0.1f;
 
         /// <summary>
         /// Reference of time that trigger spaceships shoot
@@ -46,12 +46,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         /// <summary>
         /// Time interval for trigger spaceships shoot (seconds)
         /// </summary>
-        private float _triggerShootInterval = 2f;
+        private float _triggerShootInterval = 4f;
 
         /// <summary>
         /// Max random time before release bullet (seconds)
         /// </summary>
-        private float _shootAsyncInterval = 1f;
+        private float _shootAsyncInterval = 3f;
 
         public EnemyManager(EnemyFormationController formationController)
         {
