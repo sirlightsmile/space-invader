@@ -19,7 +19,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         public event Action AllSpaceshipDestroyed;
 
         /// <summary>
-        /// Invoke when is enemy ready status changed
+        /// Invoke when IsEnemiesReady changed
         /// </summary>
         public event Action<bool> EnemyReadyStatusChanged;
 
@@ -35,7 +35,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         /// <summary>
         /// Shoot chance in percent (max is 1)
         /// </summary>
-        private float _randomShootChance = 0.3f;
+        private float _randomShootChance = 0.2f;
 
         /// <summary>
         /// Reference of time that trigger spaceships shoot
@@ -48,7 +48,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         private float _triggerShootInterval = 2f;
 
         /// <summary>
-        /// Max random time for shoot async (seconds)
+        /// Max random time before release bullet (seconds)
         /// </summary>
         private float _shootAsyncInterval = 1f;
 
@@ -56,6 +56,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         {
             _formationController = formationController;
             formationController.SpaceshipAdded += OnEnemySpaceshipAdded;
+            formationController.FormationReady += OnFormationReady;
         }
 
         /// <summary>

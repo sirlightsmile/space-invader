@@ -22,7 +22,7 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// </summary>
         public event Action<Spaceship> Destroyed;
 
-        private const string IdleAnimStateName = "Idle";
+        private const string NormalAnimStateName = "Normal";
         private const string GetHitAnimStateName = "GetHit";
 
         public int HP { get; private set; }
@@ -151,7 +151,10 @@ namespace SmileProject.SpaceInvader.Gameplay
             if (other.tag == Tags.Bullet)
             {
                 Bullet bullet = other.GetComponent<Bullet>();
-                GetHit(bullet.Damage, bullet.Owner);
+                if (bullet != null && bullet.Owner.tag != transform.tag)
+                {
+                    GetHit(bullet.Damage, bullet.Owner);
+                }
             }
         }
 
@@ -168,7 +171,7 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         private void PlayIdleAnimation()
         {
-            _animator.Play(IdleAnimStateName);
+            _animator.Play(NormalAnimStateName);
         }
     }
 }
