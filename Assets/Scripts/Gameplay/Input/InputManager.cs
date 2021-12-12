@@ -45,10 +45,10 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
                 return;
             }
 
-            MoveDirection direction;
-            float axis = UnityEngine.Input.GetAxisRaw("Horizontal");
-            if (Enum.TryParse<MoveDirection>(axis.ToString(), out direction))
+            float axisRaw = UnityEngine.Input.GetAxisRaw("Horizontal");
+            if (axisRaw != 0)
             {
+                MoveDirection direction = axisRaw < 0 ? MoveDirection.Left : MoveDirection.Right;
                 HorizontalInput?.Invoke(direction);
             }
 

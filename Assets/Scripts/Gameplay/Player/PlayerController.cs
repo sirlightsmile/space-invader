@@ -17,8 +17,9 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         /// Invoke when player destroyed
         /// </summary>
         public Action PlayerDestroyed;
-
-        public int PlayerScore { get; private set; } = 0;
+        public int TotalScore { get { return TimerScore + KillScore; } }
+        public int TimerScore { get; private set; } = 0;
+        public int KillScore { get; private set; } = 0;
         public PlayerSpaceship PlayerSpaceship { get; private set; }
         private PlayerSpaceshipBuilder _builder;
 
@@ -31,15 +32,21 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
 
         public async Task<PlayerSpaceship> CreatePlayer(Vector2 spawnPoint)
         {
-            PlayerSpaceship player = await _builder.BuildRandomSpaceship();
+            //TODO: config player spaceship id
+            PlayerSpaceship player = await _builder.BuildSpaceshipById("ps01");
             player.SetPosition(spawnPoint);
             SetPlayer(player);
             return player;
         }
 
-        public void AddScore(int score)
+        public void AddKillScore(int score)
         {
-            PlayerScore += score;
+            KillScore += score;
+        }
+
+        public void SetTimerScore(int score)
+        {
+            TimerScore = score;
         }
 
         private void SetPlayer(PlayerSpaceship player)
