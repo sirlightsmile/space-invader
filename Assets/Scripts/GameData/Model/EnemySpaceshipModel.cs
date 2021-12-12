@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using UnityEngine;
+using SmileProject.SpaceInvader.Gameplay.Enemy;
 
 namespace SmileProject.SpaceInvader.GameData
 {
@@ -15,6 +15,6 @@ namespace SmileProject.SpaceInvader.GameData
         /// <summary>
         /// Enemy type will apply custom color to enemy prefab
         /// </summary>
-        public string Type { get; private set; }
+        public EnemyType Type { get; private set; }
     }
 }
