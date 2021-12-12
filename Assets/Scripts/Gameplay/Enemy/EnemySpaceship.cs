@@ -30,5 +30,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         {
             base.OnTriggerEnter2D(other);
         }
+
+        protected override void Destroy()
+        {
+            base.Destroy();
+            ReturnToPool();
+        }
     }
 }
