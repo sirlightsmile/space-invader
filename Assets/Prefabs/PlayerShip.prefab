@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 657401795837474271}
   _attackPointTransform: {fileID: 755940592231839850}
+  _animator: {fileID: 1025000331048391276}
   _moveSpeed: 10
 --- !u!61 &2075065022684141885
 BoxCollider2D:

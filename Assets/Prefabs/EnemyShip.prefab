@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 2971910795002196730}
   m_Layer: 0
   m_Name: EnemyShip
-  m_TagString: Enemy
+  m_TagString: Invader
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 657401795837474271}
   _attackPointTransform: {fileID: 755940592231839850}
+  _animator: {fileID: 2971910795002196730}
 --- !u!61 &-183935142188327621
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ Animator:
   m_GameObject: {fileID: 812334156182985140}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8c3223763b377440a1af6bbc783f61c, type: 2}
+  m_Controller: {fileID: 9100000, guid: c34029af2be01c94f8817d7734101e58, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
