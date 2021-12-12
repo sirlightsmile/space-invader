@@ -34,7 +34,6 @@ namespace SmileProject.SpaceInvader.Sounds
         #endregion
 
         #region Sound effects
-        public static readonly GameSoundKeys DiveBomb = new GameSoundKeys(nameof(DiveBomb), "DiveBomb.wav", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Explosion = new GameSoundKeys(nameof(Explosion), "Explosion.wav", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Failed = new GameSoundKeys(nameof(Failed), "Failed.mp3", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Shoot = new GameSoundKeys(nameof(Shoot), "LaserShoot.wav", MixerGroup.SoundEffect.ToString());
@@ -42,7 +41,6 @@ namespace SmileProject.SpaceInvader.Sounds
         public static readonly GameSoundKeys PowerUp = new GameSoundKeys(nameof(PowerUp), "PowerUp.mp3", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Succeed = new GameSoundKeys(nameof(Succeed), "Succeed.mp3", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Hit = new GameSoundKeys(nameof(Hit), "Hit.wav", MixerGroup.SoundEffect.ToString());
-        public static readonly GameSoundKeys Drone = new GameSoundKeys(nameof(Drone), "Drone.wav", MixerGroup.SoundEffect.ToString());
         public static readonly GameSoundKeys Impact = new GameSoundKeys(nameof(Impact), "Impact.wav", MixerGroup.SoundEffect.ToString());
         #endregion
     }
