@@ -1,4 +1,5 @@
 using SmileProject.SpaceInvader.Constant;
+using SmileProject.SpaceInvader.GameData;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Player
@@ -10,15 +11,10 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
 
         private float _moveBorder;
 
-        /// <summary>
-        /// Set speed to player movement
-        /// </summary>
-        /// <param name="speed">speed in float</param>
-        /// <returns></returns>
-        public PlayerSpaceship SetSpeed(float speed)
+        public void Setup(PlayerSpaceshipModel model)
         {
-            _moveSpeed = speed;
-            return this;
+            base.Setup<PlayerSpaceshipModel>(model);
+            _moveSpeed = model.Speed;
         }
 
         /// <summary>
@@ -46,12 +42,8 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == Tags.Bullet)
-            {
-                Bullet bullet = other.GetComponent<Bullet>();
-                GetHit(bullet.Damage, bullet.Owner);
-            }
-            else if (other.tag == Tags.Invader)
+            base.OnTriggerEnter2D(other);
+            if (other.tag == Tags.Invader)
             {
                 // instant dead
                 GetHit(HP, other.GetComponent<Spaceship>());
