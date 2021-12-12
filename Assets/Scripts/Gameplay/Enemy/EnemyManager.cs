@@ -20,11 +20,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         public event Action AllSpaceshipDestroyed;
 
         /// <summary>
-        /// Invoke when IsEnemiesReady changed
-        /// </summary>
-        public event Action<bool> EnemyReadyStatusChanged;
-
-        /// <summary>
         /// Whather enemy ready to fight or not
         /// </summary>
         /// <value></value>
@@ -59,7 +54,19 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
         {
             _formationController = formationController;
             formationController.SpaceshipAdded += OnEnemySpaceshipAdded;
-            formationController.FormationReady += OnFormationReady;
+        }
+
+        public async Task GenerateEnemies()
+        {
+            try
+            {
+                _spaceshipGrid = await _formationController.SpawnEnemies();
+                IsEnemiesReady = true;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+            }
         }
 
         public void ApplyEnemyConfig(EnemyConfig config)
@@ -80,7 +87,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             if (!IsEnemiesReady)
             {
                 return;
-
             }
 
             float currentTime = Time.time;
@@ -107,12 +113,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             }
         }
 
-        private EnemySpaceship GetRandomSpaceship()
-        {
-            int index = UnityEngine.Random.Range(0, _enemySpaceships.Count);
-            return _enemySpaceships[index];
-        }
-
         private async Task TriggerShootAsync(EnemySpaceship spaceship)
         {
             float randomDelay = UnityEngine.Random.Range(0f, _shootAsyncInterval);
@@ -123,13 +123,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             {
                 spaceship?.Shoot();
             }
-        }
-
-        private void OnFormationReady(EnemySpaceship[,] spaceshipsGrid)
-        {
-            _spaceshipGrid = spaceshipsGrid;
-            IsEnemiesReady = true;
-            EnemyReadyStatusChanged?.Invoke(IsEnemiesReady);
         }
 
         /// <summary>

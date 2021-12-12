@@ -26,11 +26,6 @@ namespace SmileProject.SpaceInvader.Gameplay
         public event Action<bool> Pause;
 
         /// <summary>
-        /// Event invoke when wave changed
-        /// </summary>
-        public event Action WaveChange;
-
-        /// <summary>
         /// Is Game pause
         /// </summary>
         /// <value></value>
@@ -46,7 +41,15 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// Game total time. Can set from Game Config
         /// </summary>
         /// <value></value>
-        public float TotalTime { get; private set; }
+        public int TotalTime { get; private set; }
+
+        /// <summary>
+        /// Current time left from total time
+        /// </summary>
+        /// <value></value>
+        public float CurrentTime { get { return Mathf.Clamp(TotalTime - Timer, 0, TotalTime); } }
+
+        public PlayerController PlayerController { get; private set; }
 
         /// <summary>
         /// Constant time (ms) before each wave start
@@ -56,44 +59,44 @@ namespace SmileProject.SpaceInvader.Gameplay
         [SerializeField]
         private Vector2 _playerSpawnPoint;
 
-        private PlayerController _playerController;
         private EnemyManager _enemyManager;
         private InputManager _inputManager;
         private AudioManager _audioManager;
         private GameplayUIManager _uiManager;
+        private ShieldPlacer _shieldPlacer;
+        private GameConfig _gameConfig;
 
         private int _extraBonusScore = 0;
-        private int _currentWave, _waveCount = 0;
         private bool _isGameEnded, _isGameStarted = false;
+        private float _startTime;
 
         /// <summary>
         /// Initialize gameplay controller
         /// </summary>
-        public async Task Initialize(PlayerController playerController, EnemyManager enemyManager, InputManager inputManager, AudioManager audioManager, GameplayUIManager uiManager, ShieldPlacer shieldPlacer, GameConfig gameConfig)
+        public void Initialize(PlayerController playerController, EnemyManager enemyManager, InputManager inputManager, AudioManager audioManager, GameplayUIManager uiManager, ShieldPlacer shieldPlacer, GameConfig gameConfig)
         {
-            _playerController = playerController;
+            PlayerController = playerController;
             _inputManager = inputManager;
             _audioManager = audioManager;
             _enemyManager = enemyManager;
             _uiManager = uiManager;
+            _shieldPlacer = shieldPlacer;
+            _gameConfig = gameConfig;
 
             // setup listener
             inputManager.ConfirmInput += OnPressConfirm;
             inputManager.MenuInput += () => { SetGamePause(!IsPause); };
-            playerController.PlayerDestroyed += OnPlayerDestroyed;
-            playerController.PlayerGetHit += OnPlayerGetHit;
+            playerController.PlayerDestroyed += GameOver;
+            enemyManager.AllSpaceshipDestroyed += ClearGame;
             enemyManager.EnemyDestroyed += OnEnemyDestroyed;
-            enemyManager.AllSpaceshipDestroyed += OnWaveClear;
-            enemyManager.EnemyReadyStatusChanged += OnEnemyReadyStatusChanged;
 
             ApplyConfig(gameConfig);
-            await Task.WhenAll(new Task[] { shieldPlacer.PlaceShields(gameConfig.ShieldDurability), playerController.CreatePlayer(_playerSpawnPoint) });
-            uiManager.SetPlayerHp(playerController.PlayerSpaceship.HP);
+            _uiManager.Init(this);
         }
 
         public void ApplyConfig(GameConfig gameConfig)
         {
-            _playerController.ApplyPlayerConfig(gameConfig.PlayerConfig);
+            PlayerController.ApplyPlayerConfig(gameConfig.PlayerConfig);
             _enemyManager.ApplyEnemyConfig(gameConfig.EnemyConfig);
             _extraBonusScore = gameConfig.ExtraBonusScore;
             TotalTime = gameConfig.TotalTime;
@@ -102,29 +105,41 @@ namespace SmileProject.SpaceInvader.Gameplay
         public void StandBy()
         {
             _uiManager.SetShowGameStart(true);
+            IsPause = true;
         }
 
-        public void GameStart()
+        public async Task GameStart()
         {
             Timer = 0;
-            //TODO: calculate total time
-            TotalTime = 0;
-            IsPause = false;
-            _currentWave = 0;
             _isGameEnded = false;
             _isGameStarted = true;
-            _uiManager.SetShowGameStart(false);
             Start?.Invoke();
-            PlayGameplayBGM();
-            var _ = NextWave();
-            Debug.Log("Game Started");
+            _inputManager.SetAllowAttack(false);
+            await Task.WhenAll
+            (
+                new Task[]
+                {
+                    SoundHelper.PlaySound(GameSoundKeys.GameplayBGM, _audioManager, true),
+                    _enemyManager.GenerateEnemies(),
+                    _shieldPlacer.PlaceShields(_gameConfig.ShieldDurability),
+                    PlayerController.CreatePlayer(_playerSpawnPoint)
+                }
+            );
+            _uiManager.SetPlayerHp(PlayerController.PlayerSpaceship.HP);
+            _inputManager.SetAllowAttack(true);
+            _startTime = Time.time;
+            IsPause = false;
+            Debug.Log("Game Started | Total time : " + TotalTime);
         }
 
+        /// <summary>
+        /// Handle press confirm in gameplay scene
+        /// </summary>
         private void OnPressConfirm()
         {
             if (!_isGameStarted)
             {
-                GameStart();
+                var _ = GameStart();
             }
             else if (_isGameEnded)
             {
@@ -132,96 +147,87 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
         }
 
+        /// <summary>
+        /// Reset game scene
+        /// </summary>
         private void ResetGame()
         {
             Debug.Log("Reset scene");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        /// <summary>
+        /// Set pause status
+        /// </summary>
+        /// <param name="isPause"></param>
         public void SetGamePause(bool isPause)
         {
             IsPause = isPause;
             Pause?.Invoke(isPause);
-            _uiManager.SetGameplayMenu(isPause);
             Time.timeScale = isPause ? 0f : 1f;
         }
 
+        /// <summary>
+        /// Invoke when game end cause by all enemies dead
+        /// </summary>
         private void ClearGame()
         {
-            GameEnd();
-            _uiManager.ShowGameClear(_playerController.TotalScore);
+            Debug.Log("Game Clear");
+            OnGameEnd();
+            _uiManager.ShowGameClear(GetTotalScore());
             SafeInvoke.InvokeAsync(async () => await _audioManager.PlaySound(GameSoundKeys.Succeed));
         }
 
+        /// <summary>
+        /// Invoke when game end cause by player dead
+        /// </summary>
         private void GameOver()
         {
-            GameEnd();
-            _uiManager.ShowGameOver(_playerController.TotalScore);
+            Debug.Log("Game Over");
+            OnGameEnd();
+            _uiManager.ShowGameOver(PlayerController.KillScore);
             SafeInvoke.InvokeAsync(async () => await _audioManager.PlaySound(GameSoundKeys.Failed));
         }
 
-        private void GameEnd()
+        /// <summary>
+        /// Invoke when game end, unconditionally
+        /// </summary>
+        private void OnGameEnd()
         {
             _isGameEnded = true;
-            CalculateExtraScore();
             IsPause = true;
         }
 
-        private void PlayGameplayBGM()
-        {
-            var _ = SoundHelper.PlaySound(GameSoundKeys.GameplayBGM, _audioManager, true);
-        }
-
+        /// <summary>
+        /// Handle enemy destroy. Add score to player
+        /// </summary>
+        /// <param name="score"></param>
         private void OnEnemyDestroyed(int score)
         {
-            _playerController.AddKillScore(score);
-            _uiManager.SetPlayerScore(_playerController.KillScore);
+            PlayerController.AddKillScore(score);
+            _uiManager.SetPlayerScore(PlayerController.KillScore);
         }
 
-        private void OnEnemyReadyStatusChanged(bool isReady)
+        /// <summary>
+        /// Get player extra bonus score from time left
+        /// </summary>
+        /// <returns></returns>
+        private int GetExtraBonusScore()
         {
-            _inputManager.SetAllowAttack(isReady);
+            float scoreRatio = CurrentTime / TotalTime;
+            int timerScore = Mathf.FloorToInt(_extraBonusScore * scoreRatio);
+            return timerScore;
         }
 
-        private void OnPlayerGetHit(int hp)
+        /// <summary>
+        /// Get player total score
+        /// </summary>
+        /// <returns></returns>
+        private int GetTotalScore()
         {
-            _uiManager.SetPlayerHp(hp);
-        }
-
-        private async Task NextWave()
-        {
-            _uiManager.ShowWaveChange(_currentWave + 1, WaveInterval);
-            await Task.Delay(WaveInterval);
-            _currentWave++;
-            WaveChange?.Invoke();
-        }
-
-        private void OnWaveClear()
-        {
-            // wait for next wave generate
-            _inputManager.SetAllowAttack(false);
-            if (_waveCount > _currentWave)
-            {
-                var _ = NextWave();
-            }
-            else
-            {
-                ClearGame();
-            }
-        }
-
-        private void OnPlayerDestroyed()
-        {
-            GameOver();
-        }
-
-        private void CalculateExtraScore()
-        {
-            float scoreRatio = Timer / TotalTime;
-            // TODO: Config time bonus
-            int timeBonus = 10;
-            int timerScore = Mathf.FloorToInt(timeBonus * scoreRatio);
-            _playerController.SetTimerScore(timerScore);
+            int bonus = GetExtraBonusScore();
+            int killScore = PlayerController.KillScore;
+            return bonus + killScore;
         }
 
         private void Update()
@@ -232,7 +238,14 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
 
             _enemyManager.Update();
-            Timer += Time.time;
+            Timer = Time.time - _startTime;
+
+            if (Timer > TotalTime)
+            {
+                // game over cause by timeout
+                GameOver();
+                Debug.Log("Time out");
+            }
         }
     }
 }

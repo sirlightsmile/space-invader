@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812334156182985140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -999, y: -999, z: 0}
+  m_LocalPosition: {x: 999, y: 999, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 5990076109882556249}
@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 657401795837474271}
+  _animateSprites: []
   _attackPointTransform: {fileID: 755940592231839850}
   _animator: {fileID: 1025000331048391276}
   _moveSpeed: 10

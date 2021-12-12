@@ -77,11 +77,10 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// <param name="attacker">attacker spaceship reference</param>
         public virtual void GetHit(int damage, Spaceship attacker)
         {
-            Debug.Log("Got hit!!");
+            Debug.Log("Got hit by " + attacker?.name);
             int result = HP - damage;
             HP = Mathf.Clamp(result, 0, HP);
             GotHit?.Invoke(attacker, this);
-            Debug.Log("Play get hit animation");
             PlayGetHitAnimation();
 
             if (IsDead())
@@ -151,7 +150,6 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         private void PlayGetHitAnimation()
         {
-            Debug.Log("Play get hit animation");
             _animator.Play(GetHitAnimStateName);
         }
 

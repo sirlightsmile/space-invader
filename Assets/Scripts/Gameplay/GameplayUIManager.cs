@@ -28,7 +28,28 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         public void Init(GameplayController gameplayController)
         {
             _gameplayController = gameplayController;
+            _gameplayController.Start += OnGameStart;
+            _gameplayController.Pause += OnGamePause;
+            _gameplayController.PlayerController.PlayerGetHit += OnPlayerGetHit;
         }
+
+        #region Event listener
+        private void OnGameStart()
+        {
+            SetShowGameStart(false);
+            SetShowPlayerInfo(true);
+        }
+
+        private void OnGamePause(bool isPause)
+        {
+            SetGameplayMenu(isPause);
+        }
+
+        private void OnPlayerGetHit(int hp)
+        {
+            SetPlayerHp(hp);
+        }
+        #endregion
 
         public void ShowGameClear(int score)
         {

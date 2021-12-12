@@ -14,6 +14,7 @@ namespace SmileProject.SpaceInvader.Gameplay
     public class EnemySpaceshipBuilder : BaseSpaceshipBuilder
     {
         private const string PrefabKey = "EnemyPrefab";
+        private const int InitialPoolSize = 20;
 
         /// <summary>
         /// Idle sprite animate interval
@@ -27,9 +28,9 @@ namespace SmileProject.SpaceInvader.Gameplay
 
         public EnemySpaceshipBuilder(IResourceLoader resourceLoader, GameDataManager gameDataManager, WeaponFactory weaponFactory, AudioManager audioManager) : base(resourceLoader, gameDataManager, weaponFactory, audioManager) { }
 
-        public async Task SetupSpaceshipPool(PoolManager poolManager, int size)
+        public async Task SetupSpaceshipPool(PoolManager poolManager)
         {
-            await SetupPool(poolManager, PrefabKey, size);
+            await SetupPool(poolManager, PrefabKey, InitialPoolSize);
         }
 
         public async Task<EnemySpaceship> BuildEnemySpaceship(EnemySpaceshipModel model)

@@ -80,23 +80,14 @@ namespace SmileProject.SpaceInvader
 
             // inject enemy manager
             EnemySpaceshipBuilder enemiesBuilder = new EnemySpaceshipBuilder(resourceLoader, gameDataManager, weaponFactory, audioManager);
+            await enemiesBuilder.SetupSpaceshipPool(poolManager);
             enemyFormationController.Initialize(enemiesBuilder);
             EnemyManager enemyManager = new EnemyManager(enemyFormationController);
 
             ShieldPlacer shieldPlacer = new ShieldPlacer(resourceLoader, audioManager);
-
-            await Task.WhenAll
-            (
-                new Task[]
-                {
-                    gameplayController.Initialize(playerController, enemyManager, inputManager, audioManager, uiManager, shieldPlacer, gameConfig),
-                    // TODO: adjust size
-                    enemiesBuilder.SetupSpaceshipPool(poolManager, 20)
-                }
-            );
+            gameplayController.Initialize(playerController, enemyManager, inputManager, audioManager, uiManager, shieldPlacer, gameConfig);
             _gameplayController = gameplayController;
-            _gameplayController.WaveChange += enemyFormationController.OnWaveChanged;
-            _gameplayController.GameStart();
+            _gameplayController.StandBy();
         }
 
 

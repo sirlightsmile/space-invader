@@ -1,23 +1,21 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using SmileProject.Generic.Utilities;
 using SmileProject.SpaceInvader.Constant;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.Enemy
 {
+    /// <summary>
+    /// Part of enemy management module.
+    /// this class help enemy manager to control enemies formation and movement
+    /// </summary>
     public class EnemyFormationController : MonoBehaviour
     {
         /// <summary>
         /// Invoke when add new spaceship to formation
         /// </summary>
         public event Action<Spaceship> SpaceshipAdded;
-
-        /// <summary>
-		/// Invoke when all spaceship reached all formation point
-		/// </summary>
-		public event Action<EnemySpaceship[,]> FormationReady;
 
         [Header("Spawn")]
         [SerializeField]
@@ -56,12 +54,12 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
             _enemyBuilder.SpaceshipBuilded += OnSpaceshipBuilded;
         }
 
-        public void SetMoveSpeed(float speed)
+        internal void SetMoveSpeed(float speed)
         {
             _moveSpeed = speed;
         }
 
-        public async Task SpawnEnemies()
+        internal async Task<EnemySpaceship[,]> SpawnEnemies()
         {
             Debug.Log("Spawn Enemies");
             _rowContainers = new Transform[_columns];
@@ -82,13 +80,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Enemy
                 StartCoroutine(MoveEnemyRowSide(currentRow));
                 await Task.Delay(_spawnInterval);
             }
-            Debug.Log("Enemies Formation Ready");
-            FormationReady?.Invoke(spaceshipGrid);
-        }
-
-        public void OnWaveChanged()
-        {
-            SafeInvoke.InvokeAsync(async () => { await SpawnEnemies(); });
+            return spaceshipGrid;
         }
 
         private Transform CreateRowContainer()

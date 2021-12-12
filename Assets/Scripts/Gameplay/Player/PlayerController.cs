@@ -18,8 +18,7 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         /// Invoke when player destroyed
         /// </summary>
         public Action PlayerDestroyed;
-        public int TotalScore { get { return TimerScore + KillScore; } }
-        public int TimerScore { get; private set; } = 0;
+
         public int KillScore { get; private set; } = 0;
         public PlayerSpaceship PlayerSpaceship { get; private set; }
         private PlayerSpaceshipBuilder _builder;
@@ -56,11 +55,6 @@ namespace SmileProject.SpaceInvader.Gameplay.Player
         public void AddKillScore(int score)
         {
             KillScore += score;
-        }
-
-        public void SetTimerScore(int score)
-        {
-            TimerScore = score;
         }
 
         private void SetPlayer(PlayerSpaceship player)
