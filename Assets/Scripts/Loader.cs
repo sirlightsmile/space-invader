@@ -50,8 +50,9 @@ namespace SmileProject.SpaceInvader
                 _gameDataManager.Initialize(_resourceLoader),
                 InitPoolManager(_resourceLoader),
                 InitAudioManager(_resourceLoader),
-
             });
+
+            //TODO: init when change to scene battle
             await InitGameplayController(_resourceLoader, _gameDataManager, _poolManager, _audioManager);
 
             IsInitialized = true;
