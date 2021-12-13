@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: gameplay_atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 21300000, guid: 76b2a9ce52bcc5548b80541512e3dae0, type: 3}
+    - {fileID: 2800000, guid: 294148478924ac94ba961d5a707c6342, type: 3}
+    - {fileID: 2800000, guid: ebac59cf60cafdd49983975d161b367d, type: 3}
+    - {fileID: 2800000, guid: 501a07628c667024789152dac0f03725, type: 3}
+    - {fileID: 2800000, guid: 7a7a7017dd833484993f20462676bb49, type: 3}
+    - {fileID: 2800000, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
+    - {fileID: 21300000, guid: f17a0d5afa80c794289d375109841046, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 5537798915647191905, guid: 501a07628c667024789152dac0f03725, type: 3}
+  - {fileID: 5131311996987606423, guid: 501a07628c667024789152dac0f03725, type: 3}
+  - {fileID: -8222981612870641908, guid: 501a07628c667024789152dac0f03725, type: 3}
+  - {fileID: -8868272330977153355, guid: 7a7a7017dd833484993f20462676bb49, type: 3}
+  - {fileID: 6349069617109316163, guid: 7a7a7017dd833484993f20462676bb49, type: 3}
+  - {fileID: 968011450282801046, guid: 294148478924ac94ba961d5a707c6342, type: 3}
+  - {fileID: -1612753994492432078, guid: 294148478924ac94ba961d5a707c6342, type: 3}
+  - {fileID: 8595901204166014776, guid: 294148478924ac94ba961d5a707c6342, type: 3}
+  - {fileID: 21300000, guid: f17a0d5afa80c794289d375109841046, type: 3}
+  - {fileID: 2389193319765324094, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
+  - {fileID: 1691966074973790518, guid: ab2d51ddf0fc1cb49aa8055e93289ae5, type: 3}
+  - {fileID: 21300000, guid: 76b2a9ce52bcc5548b80541512e3dae0, type: 3}
+  - {fileID: 3403735894072765234, guid: ebac59cf60cafdd49983975d161b367d, type: 3}
+  - {fileID: 6947746525782920220, guid: ebac59cf60cafdd49983975d161b367d, type: 3}
+  - {fileID: -6621319459219587883, guid: ebac59cf60cafdd49983975d161b367d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - EnemyYellow_0
+  - EnemyYellow_1
+  - EnemyYellow_2
+  - PlayerSprite_0
+  - PlayerSprite_1
+  - EnemyBlue_0
+  - EnemyBlue_1
+  - EnemyBlue_2
+  - laserRed03
+  - shield_0
+  - shield_2
+  - bullet
+  - EnemyRed_2
+  - EnemyRed_1
+  - EnemyRed_0
+  m_Tag: gameplay_atlas
+  m_IsVariant: 0

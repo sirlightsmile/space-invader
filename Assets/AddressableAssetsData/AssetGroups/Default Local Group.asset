@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ef604634871125d48919834865ab9851
+  m_SerializeEntries:
+  - m_GUID: 7a7a7017dd833484993f20462676bb49
+    m_Address: PlayerSprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: ab2d51ddf0fc1cb49aa8055e93289ae5
+    m_Address: ShieldSprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 9c94337c5f17050458b5999f93e2e68e
+    m_Address: EnemyPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 3b5ba9e377c71284f95f520861c7c19a
+    m_Address: PlayerPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: eaeada1e3b937844ea8ed8cf9a48ad01
+    m_Address: GameplaySounds
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 87d560f5d72370e4094cc93a7741cf18
+    m_Address: BulletPrefabs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 437b17fca9d4e8846afaae991138963a
+    m_Address: ShieldPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 72536a56c94c46144a43949203c9ab80
+    m_Address: EnemyFormationController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 08e9395bdb50dcd4aa5f65f51ead74b4
+    m_Address: GameplayController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 90429c3a0cb0bc245865581399beefc7
+    m_Address: GameplayUIManager
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 294148478924ac94ba961d5a707c6342
+    m_Address: EnemyBlue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: ebac59cf60cafdd49983975d161b367d
+    m_Address: EnemyRed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: 501a07628c667024789152dac0f03725
+    m_Address: EnemyYellow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - gameplay
+  - m_GUID: c740ff358e8ea824ea097091fbfedf7f
+    m_Address: ScoreItemUI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ui
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7adbe51be6ddb7e4082582cdf01515d0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2b7b484cb70d4d8459a6bd3c33402101, type: 2}
+    - {fileID: 11400000, guid: 192a297ee91ea524b9f9ec8e54cff8d8, type: 2}
