@@ -286,6 +286,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             Start = null;
             Pause = null;
             ResetGame = null;
+            _audioManager.CleanAll();
             _poolManager.DestroyAllPool();
             RemoveAllListeners();
         }

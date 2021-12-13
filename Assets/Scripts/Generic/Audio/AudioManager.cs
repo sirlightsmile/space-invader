@@ -101,6 +101,26 @@ namespace SmileProject.Generic.Audio
             }
         }
 
+        /// <summary>
+        /// Clear all audio sources references for free audio clip from memories
+        /// </summary>
+        /// <param name="ignorePlayingSource">Ignore clear reference from playing sources</param>
+        public void CleanAll(bool ignorePlayingSource = false)
+        {
+            foreach (AudioSource audioSource in _audioSources)
+            {
+                if (audioSource.isPlaying)
+                {
+                    if (ignorePlayingSource)
+                    {
+                        continue;
+                    }
+                    audioSource.Stop();
+                }
+                CleanAudioSource(audioSource);
+            }
+        }
+
         private AudioSource GetAvaliableAudioSource()
         {
             AudioSource audioSource = _audioSources.Find(item => !item.isPlaying);
@@ -112,7 +132,25 @@ namespace SmileProject.Generic.Audio
                 audioSource.playOnAwake = false;
                 _audioSources.Add(audioSource);
             }
+            else
+            {
+                CleanAudioSource(audioSource);
+            }
             return audioSource;
+        }
+
+        /// <summary>
+        /// Clean audio source from clip resources reference
+        /// </summary>
+        /// <param name="audioSource"></param>
+        private void CleanAudioSource(AudioSource audioSource)
+        {
+            if (audioSource.clip != null)
+            {
+                var clipRef = audioSource.clip;
+                audioSource.clip = null;
+                _resourceLoader.Release(clipRef);
+            }
         }
 
         private async Task InitMixer(string mixerKey)
