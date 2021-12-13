@@ -1,5 +1,3 @@
-using System;
-
 namespace SmileProject.Generic.Utilities
 {
     public abstract class StringEnum<T> where T : StringEnum<T>

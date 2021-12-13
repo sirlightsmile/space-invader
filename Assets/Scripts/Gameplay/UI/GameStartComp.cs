@@ -1,4 +1,5 @@
 using System;
+using SmileProject.SpaceInvader.UI;
 
 namespace SmileProject.SpaceInvader.Gameplay.UI
 {

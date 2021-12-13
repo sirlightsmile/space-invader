@@ -24,6 +24,7 @@ namespace SmileProject.Generic.Audio
 
         private void Awake()
         {
+            DontDestroyOnLoad(this);
             _audioSources = new List<AudioSource>(_audioSourcesContainer.GetComponentsInChildren<AudioSource>());
             _playingSource = new Dictionary<int, AudioSource>();
             _mixerMap = new Dictionary<string, AudioMixerGroup>();

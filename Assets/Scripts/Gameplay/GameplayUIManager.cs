@@ -1,4 +1,3 @@
-using SmileProject.SpaceInvader.Gameplay;
 using UnityEngine;
 
 namespace SmileProject.SpaceInvader.Gameplay.UI

@@ -17,6 +17,11 @@ namespace SmileProject.SpaceInvader.Gameplay.Input
         private bool _allowInput = true;
         private bool _allowAttack = true;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         /// <summary>
         /// Set permission for every input.
         /// </summary>

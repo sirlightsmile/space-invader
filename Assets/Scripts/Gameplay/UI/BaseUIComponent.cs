@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace SmileProject.SpaceInvader.Gameplay.UI
+namespace SmileProject.SpaceInvader.UI
 {
     public abstract class BaseUIComponent : MonoBehaviour
     {
