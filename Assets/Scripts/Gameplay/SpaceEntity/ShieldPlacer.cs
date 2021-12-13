@@ -39,8 +39,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             float targetScreenX = isFlip ? screenPosX - (shield.Width / 2) : screenPosX + (shield.Width / 2);
             float posX = Camera.main.ScreenToWorldPoint(new Vector2(targetScreenX, 0)).x;
             Vector2 targetPosition = new Vector2(posX, shield.transform.position.y);
-            //TODO: get from config
-            shield.SetDurability(5).SetSpriteFlipX(isFlip).SetPosition(targetPosition);
+            shield.SetDurability(durability).SetSpriteFlipX(isFlip).SetPosition(targetPosition);
             shield.SetSounds(_audioManager, GameSoundKeys.Hit, GameSoundKeys.Explosion);
             shield.Destroyed += OnObstacleDestroy;
         }
