@@ -13,9 +13,9 @@ namespace SmileProject.SpaceInvader.Gameplay
     public abstract class SpaceEntity : PoolObject
     {
         /// <summary>
-        /// Get sprite width
+        /// Get sprite width in screen size
         /// </summary>
-        /// <value>sprite width</value>
+        /// <value>sprite width pixel</value>
         public float Width
         {
             get
@@ -25,9 +25,9 @@ namespace SmileProject.SpaceInvader.Gameplay
         }
 
         /// <summary>
-        /// Get sprite height
+        /// Get sprite height in screen size
         /// </summary>
-        /// <value>sprite height</value>
+        /// <value>sprite height pixel</value>
         public float Height
         {
             get
