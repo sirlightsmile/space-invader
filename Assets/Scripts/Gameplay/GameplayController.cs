@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using SmileProject.Generic.Audio;
+using SmileProject.Generic.Pooling;
 using SmileProject.Generic.Utilities;
 using SmileProject.SpaceInvader.Config;
 using SmileProject.SpaceInvader.Gameplay.Enemy;
@@ -9,7 +10,6 @@ using SmileProject.SpaceInvader.Gameplay.Player;
 using SmileProject.SpaceInvader.Gameplay.UI;
 using SmileProject.SpaceInvader.Sounds;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SmileProject.SpaceInvader.Gameplay
 {
@@ -24,6 +24,11 @@ namespace SmileProject.SpaceInvader.Gameplay
         /// Invoke when game pause or resume
         /// </summary>
         public event Action<bool> Pause;
+
+        /// <summary>
+        /// Invoke when game end and attemp to reset
+        /// </summary>
+        public event Action ResetGame;
 
         /// <summary>
         /// Is Game pause
@@ -63,17 +68,28 @@ namespace SmileProject.SpaceInvader.Gameplay
         private InputManager _inputManager;
         private AudioManager _audioManager;
         private GameplayUIManager _uiManager;
+        private PoolManager _poolManager;
         private ShieldPlacer _shieldPlacer;
         private GameConfig _gameConfig;
 
         private int _extraBonusScore = 0;
         private bool _isGameEnded, _isGameStarted = false;
         private float _startTime;
+        private int _bgmSoundPlayId = -1;
 
         /// <summary>
         /// Initialize gameplay controller
         /// </summary>
-        public void Initialize(PlayerController playerController, EnemyManager enemyManager, InputManager inputManager, AudioManager audioManager, GameplayUIManager uiManager, ShieldPlacer shieldPlacer, GameConfig gameConfig)
+        public void Initialize(
+            PlayerController playerController,
+            EnemyManager enemyManager,
+            InputManager inputManager,
+            AudioManager audioManager,
+            GameplayUIManager uiManager,
+            ShieldPlacer shieldPlacer,
+            GameConfig gameConfig,
+            PoolManager poolManager
+        )
         {
             PlayerController = playerController;
             _inputManager = inputManager;
@@ -82,14 +98,9 @@ namespace SmileProject.SpaceInvader.Gameplay
             _uiManager = uiManager;
             _shieldPlacer = shieldPlacer;
             _gameConfig = gameConfig;
+            _poolManager = poolManager;
 
-            // setup listener
-            inputManager.ConfirmInput += OnPressConfirm;
-            inputManager.MenuInput += () => { SetGamePause(!IsPause); };
-            playerController.PlayerDestroyed += GameOver;
-            enemyManager.AllSpaceshipDestroyed += ClearGame;
-            enemyManager.EnemyDestroyed += OnEnemyDestroyed;
-
+            AddListeners();
             ApplyConfig(gameConfig);
             _uiManager.Init(this);
         }
@@ -100,12 +111,6 @@ namespace SmileProject.SpaceInvader.Gameplay
             _enemyManager.ApplyEnemyConfig(gameConfig.EnemyConfig);
             _extraBonusScore = gameConfig.ExtraBonusScore;
             TotalTime = gameConfig.TotalTime;
-        }
-
-        public void StandBy()
-        {
-            _uiManager.SetShowGameStart(true);
-            IsPause = true;
         }
 
         public async Task GameStart()
@@ -119,7 +124,7 @@ namespace SmileProject.SpaceInvader.Gameplay
             (
                 new Task[]
                 {
-                    SoundHelper.PlaySound(GameSoundKeys.GameplayBGM, _audioManager, true),
+                    PlayGameplayBGM(),
                     _enemyManager.GenerateEnemies(),
                     _shieldPlacer.PlaceShields(_gameConfig.ShieldDurability),
                     PlayerController.CreatePlayer(_playerSpawnPoint)
@@ -130,6 +135,11 @@ namespace SmileProject.SpaceInvader.Gameplay
             _startTime = Time.time;
             IsPause = false;
             Debug.Log("Game Started | Total time : " + TotalTime);
+        }
+
+        private async Task PlayGameplayBGM()
+        {
+            _bgmSoundPlayId = await SoundHelper.PlaySound(GameSoundKeys.GameplayBGM, _audioManager, true);
         }
 
         /// <summary>
@@ -143,17 +153,9 @@ namespace SmileProject.SpaceInvader.Gameplay
             }
             else if (_isGameEnded)
             {
-                ResetGame();
+                ResetGame?.Invoke();
+                CleanUp();
             }
-        }
-
-        /// <summary>
-        /// Reset game scene
-        /// </summary>
-        private void ResetGame()
-        {
-            Debug.Log("Reset scene");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         /// <summary>
@@ -165,6 +167,11 @@ namespace SmileProject.SpaceInvader.Gameplay
             IsPause = isPause;
             Pause?.Invoke(isPause);
             Time.timeScale = isPause ? 0f : 1f;
+        }
+
+        private void TriggerGamePause()
+        {
+            SetGamePause(!IsPause);
         }
 
         /// <summary>
@@ -247,6 +254,40 @@ namespace SmileProject.SpaceInvader.Gameplay
                 GameOver();
                 Debug.Log("Time out");
             }
+        }
+
+        private void AddListeners()
+        {
+            _inputManager.ConfirmInput += OnPressConfirm;
+            _inputManager.MenuInput += TriggerGamePause;
+            _enemyManager.AllSpaceshipDestroyed += ClearGame;
+            _enemyManager.EnemyDestroyed += OnEnemyDestroyed;
+            PlayerController.PlayerDestroyed += GameOver;
+        }
+
+        private void RemoveAllListeners()
+        {
+            _inputManager.ConfirmInput -= OnPressConfirm;
+            _inputManager.MenuInput -= TriggerGamePause;
+            _enemyManager.AllSpaceshipDestroyed -= ClearGame;
+            _enemyManager.EnemyDestroyed -= OnEnemyDestroyed;
+            PlayerController.PlayerDestroyed -= GameOver;
+        }
+
+        /// <summary>
+        /// Clean up assets in game scene to free memories
+        /// </summary>
+        private void CleanUp()
+        {
+            if (_bgmSoundPlayId > -1)
+            {
+                _audioManager.StopSound(_bgmSoundPlayId);
+            }
+            Start = null;
+            Pause = null;
+            ResetGame = null;
+            _poolManager.DestroyAllPool();
+            RemoveAllListeners();
         }
     }
 }

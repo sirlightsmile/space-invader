@@ -26,6 +26,7 @@ namespace SmileProject.SpaceInvader.MainMenu
             _resourceLoader = resourceLoader;
 
             _inputManager.ConfirmInput += OnConfirmInput;
+            _inputManager.SetAllowInput(true);
         }
 
         public async Task ShowScorePanel()
@@ -49,6 +50,7 @@ namespace SmileProject.SpaceInvader.MainMenu
         {
             _inputManager.ConfirmInput -= OnConfirmInput;
             ReadyForBattle?.Invoke();
+            ReadyForBattle = null;
         }
     }
 }

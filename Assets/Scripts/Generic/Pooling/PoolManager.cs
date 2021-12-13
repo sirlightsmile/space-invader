@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SmileProject.Generic.ResourceManagement;
 using UnityEngine;
@@ -30,6 +32,7 @@ namespace SmileProject.Generic.Pooling
 
         public void Initialize(IResourceLoader resourceLoader)
         {
+            DontDestroyOnLoad(this);
             _resourceLoader = resourceLoader;
         }
 
@@ -132,9 +135,22 @@ namespace SmileProject.Generic.Pooling
                 return;
             }
             Destroy(poolInfo.Container.gameObject);
-            _resourceLoader.Release(poolInfo.Prefab);
+            _resourceLoader.Release(poolInfo.Options.AssetKey);
             _poolInfoDict.Remove(poolName);
             Debug.Log($"Destroy pool : [{poolName}]");
+        }
+
+        /// <summary>
+        /// Destroy all exist pool for free memories
+        /// Should use when clear scene only to prevent missing reference
+        /// </summary>
+        public void DestroyAllPool()
+        {
+            var allPoolNames = _poolInfoDict.Keys.ToArray();
+            for (int i = allPoolNames.Length - 1; i >= 0; i--)
+            {
+                DestroyPool(allPoolNames[i]);
+            }
         }
 
         /// <summary>

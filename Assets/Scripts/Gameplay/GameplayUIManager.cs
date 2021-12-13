@@ -14,9 +14,6 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         private TimerComp _timerComp;
 
         [SerializeField]
-        private GameStartComp _gameStartComp;
-
-        [SerializeField]
         private GameEndComp _gameEndComp;
 
         [SerializeField]
@@ -35,7 +32,6 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
         #region Event listener
         private void OnGameStart()
         {
-            SetShowGameStart(false);
             SetShowGameUI(true);
         }
 
@@ -91,18 +87,6 @@ namespace SmileProject.SpaceInvader.Gameplay.UI
                 _playerScoreComp.Hide();
                 _playerHpComp.Hide();
                 _timerComp.Hide();
-            }
-        }
-
-        public void SetShowGameStart(bool isShow)
-        {
-            if (isShow)
-            {
-                _gameStartComp.Show();
-            }
-            else
-            {
-                _gameStartComp.Hide();
             }
         }
 

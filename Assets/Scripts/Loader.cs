@@ -51,22 +51,24 @@ namespace SmileProject.SpaceInvader
             {
                 _gameDataManager.Initialize(_resourceLoader),
                 InitAudioManager(_resourceLoader),
-                InitInputManager(_resourceLoader)
+                InitInputManager(_resourceLoader),
+                InitPoolManager(_resourceLoader)
             });
             IsInitialized = true;
 
-            await LoadMainMenu();
+            LoadMainMenu();
         }
 
-        public async Task LoadMainMenu()
+        public async void LoadMainMenu()
         {
             SceneManager.LoadScene(GameScenes.MainMenu);
             var mainMenu = await _resourceLoader.InstantiateAsync<GameMainMenu>("MainMenu");
             mainMenu.Init(_inputManager, _gameDataManager, _resourceLoader);
+            mainMenu.ReadyForBattle += LoadBattleScene;
             await mainMenu.ShowScorePanel();
         }
 
-        public async Task LoadBattleScene()
+        public async void LoadBattleScene()
         {
             SceneManager.LoadScene(GameScenes.Battle);
             await InitGameplayController(_resourceLoader, _gameDataManager, _audioManager);
@@ -76,22 +78,17 @@ namespace SmileProject.SpaceInvader
         {
             // init async
             GameConfig gameConfig = null;
-            PoolManager poolManager = null;
             GameplayUIManager uiManager = null;
             GameplayController gameplayController = null;
             EnemyFormationController enemyFormationController = null;
             Func<Task> loadGameConfig = async () => { gameConfig = await resourceLoader.Load<GameConfig>("GameConfig"); };
-            Func<Task> initPoolManager = async () =>
-            {
-                poolManager = await resourceLoader.InstantiateAsync<PoolManager>("PoolManager");
-                poolManager.Initialize(resourceLoader);
-            };
+
             Func<Task> initFormationController = async () => { enemyFormationController = await resourceLoader.InstantiateAsync<EnemyFormationController>("EnemyFormationController"); };
             Func<Task> initGameController = async () => { gameplayController = await resourceLoader.InstantiateAsync<GameplayController>("GameplayController"); };
             Func<Task> initGameplayUIManager = async () => { uiManager = await resourceLoader.InstantiateAsync<GameplayUIManager>("GameplayUIManager"); };
-            await Task.WhenAll(new Task[] { loadGameConfig(), initGameController(), initGameplayUIManager(), initFormationController(), initPoolManager() });
+            await Task.WhenAll(new Task[] { loadGameConfig(), initGameController(), initGameplayUIManager(), initFormationController() });
 
-            WeaponFactory weaponFactory = new WeaponFactory(gameDataManager, poolManager, audioManager);
+            WeaponFactory weaponFactory = new WeaponFactory(gameDataManager, _poolManager, audioManager);
 
             // inject player controller
             PlayerSpaceshipBuilder playerBuilder = new PlayerSpaceshipBuilder(resourceLoader, gameDataManager, weaponFactory, audioManager);
@@ -99,14 +96,22 @@ namespace SmileProject.SpaceInvader
 
             // inject enemy manager
             EnemySpaceshipBuilder enemiesBuilder = new EnemySpaceshipBuilder(resourceLoader, gameDataManager, weaponFactory, audioManager);
-            await enemiesBuilder.SetupSpaceshipPool(poolManager);
+            await enemiesBuilder.SetupSpaceshipPool(_poolManager);
             enemyFormationController.Initialize(enemiesBuilder);
             EnemyManager enemyManager = new EnemyManager(enemyFormationController);
 
             ShieldPlacer shieldPlacer = new ShieldPlacer(resourceLoader, audioManager);
-            gameplayController.Initialize(playerController, enemyManager, _inputManager, audioManager, uiManager, shieldPlacer, gameConfig);
+            gameplayController.Initialize(playerController, enemyManager, _inputManager, audioManager, uiManager, shieldPlacer, gameConfig, _poolManager);
             _gameplayController = gameplayController;
-            _gameplayController.StandBy();
+            _gameplayController.ResetGame += LoadMainMenu;
+            await _gameplayController.GameStart();
+        }
+
+        private async Task InitPoolManager(IResourceLoader resourceLoader)
+        {
+            PoolManager poolManager = await resourceLoader.InstantiateAsync<PoolManager>("PoolManager");
+            _poolManager = poolManager;
+            _poolManager.Initialize(resourceLoader);
         }
 
         private async Task InitAudioManager(IResourceLoader resourceLoader)
