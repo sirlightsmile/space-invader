@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpaceInvaderGameConfig
   m_EditorClassIdentifier: 
   _totalTime: 60
-  _extraBonusScore: 10
+  _extraBonusScore: 1000
   _shieldDurability: 5
   _playerConfig:
     _playerSpaceshipId: ps01
